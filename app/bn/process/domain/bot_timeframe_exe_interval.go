@@ -144,12 +144,7 @@ func (b *BotTimeframeExeIntervalRequest) ToPosition() *position.Position {
 }
 
 func (b *BotTimeframeExeIntervalRequest) ToOpenPosition() *position.Position {
-	side := ""
-	if utils.IsLongPosition(b.positionSide) {
-		side = bnconstant.BUY
-	} else {
-		side = bnconstant.SELL
-	}
+	side := b.GetOpenSide()
 	return &position.Position{
 		BotID:        b.botId,
 		Symbol:       b.symbol,
@@ -162,12 +157,7 @@ func (b *BotTimeframeExeIntervalRequest) ToOpenPosition() *position.Position {
 }
 
 func (b *BotTimeframeExeIntervalRequest) ToClosePosition() *position.Position {
-	side := ""
-	if utils.IsLongPosition(b.positionSide) {
-		side = bnconstant.SELL
-	} else {
-		side = bnconstant.BUY
-	}
+	side := b.GetCloseSide()
 	return &position.Position{
 		BotID:        b.botId,
 		Symbol:       b.symbol,

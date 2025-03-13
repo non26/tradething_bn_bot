@@ -11,7 +11,7 @@ import (
 
 type IBotService interface {
 	// InvalidateBot(ctx context.Context, req *bnbotsvcreq.InvalidateBot) (*handlerres.InvalidateBotHandlerResponse, error)
-	BotTimeframeExeInterval(ctx context.Context, req domain.BotTimeframeExeIntervalRequest) (*res.BotTimeframeExeIntervalResponse, error)
+	BotTimeframeExeInterval(ctx context.Context, req *domain.BotTimeframeExeIntervalRequest) (*res.BotTimeframeExeIntervalResponse, error)
 }
 
 type botService struct {

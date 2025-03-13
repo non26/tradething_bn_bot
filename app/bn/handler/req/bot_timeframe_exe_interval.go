@@ -1,6 +1,11 @@
 package req
 
-import "strings"
+import (
+	"strconv"
+	"strings"
+
+	"tradethingbot/app/bn/process/domain"
+)
 
 type BotTimeframeExeIntervalHandlerRequest struct {
 	BotId        string  `json:"bot_id"`
@@ -9,7 +14,7 @@ type BotTimeframeExeIntervalHandlerRequest struct {
 	PositionSide string  `json:"position_side"`
 	StartDate    string  `json:"start_date"`
 	EndDate      string  `json:"end_date"`
-	AmountQ      float64 `json:"amount_q"`
+	AmountB      float64 `json:"amount_b"`
 }
 
 func (b *BotTimeframeExeIntervalHandlerRequest) Validate() error {
@@ -30,14 +35,14 @@ func transformToRFC3339(_time string) string {
 	return date_time_utc
 }
 
-// func (b *BotTimeframeExeIntervalHandlerRequest) ToBotServiceRequest() (*bnsvcreq.BotTimeframeExeIntervalRequest, error) {
-// 	svcmodel := &bnsvcreq.BotTimeframeExeIntervalRequest{}
-// 	svcmodel.SetBotId(b.BotId)
-// 	svcmodel.SetBotOrderID(b.BotOrderID)
-// 	svcmodel.SetSymbol(b.Symbol)
-// 	svcmodel.SetPositionSide(b.PositionSide)
-// 	svcmodel.SetStartDate(b.StartDate)
-// 	svcmodel.SetEndDate(b.EndDate)
-// 	svcmodel.SetAmountQ(b.AmountQ)
-// 	return svcmodel, nil
-// }
+func (b *BotTimeframeExeIntervalHandlerRequest) ToBotServiceRequest() *domain.BotTimeframeExeIntervalRequest {
+	svcmodel := &domain.BotTimeframeExeIntervalRequest{}
+	svcmodel.SetBotId(b.BotId)
+	svcmodel.SetBotOrderID(b.BotOrderID)
+	svcmodel.SetSymbol(b.Symbol)
+	svcmodel.SetPositionSide(b.PositionSide)
+	svcmodel.SetStartDate(b.StartDate)
+	svcmodel.SetEndDate(b.EndDate)
+	svcmodel.SetAmountB(strconv.FormatFloat(b.AmountB, 'f', -1, 64))
+	return svcmodel
+}

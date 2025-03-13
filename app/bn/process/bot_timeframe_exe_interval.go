@@ -7,7 +7,7 @@ import (
 	"tradethingbot/app/bn/process/domain"
 )
 
-func (b *botService) BotTimeframeExeInterval(ctx context.Context, req domain.BotTimeframeExeIntervalRequest) (*res.BotTimeframeExeIntervalResponse, error) {
+func (b *botService) BotTimeframeExeInterval(ctx context.Context, req *domain.BotTimeframeExeIntervalRequest) (*res.BotTimeframeExeIntervalResponse, error) {
 
 	InTime := req.IsPresentInTimeframe()
 

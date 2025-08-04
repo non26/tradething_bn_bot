@@ -29,7 +29,8 @@ func (b *botService) BotTimeframeExeInterval(ctx context.Context, req *domain.Bo
 
 		err = lookUpResult.ValiddatePositionSideWith(req.GetPositionSide())
 		if err != nil {
-			return nil, err
+			// return nil, err
+			lookUpResult.SetNewIsFirstTime(false)
 		}
 	}
 

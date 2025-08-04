@@ -1,20 +1,20 @@
 package req
 
 import (
-	"strconv"
 	"strings"
 
 	"tradethingbot/app/bn/process/domain"
 )
 
 type BotTimeframeExeIntervalHandlerRequest struct {
-	BotId        string  `json:"bot_id"`
-	BotOrderID   string  `json:"bot_order_id"` // client id
-	Symbol       string  `json:"symbol"`
-	PositionSide string  `json:"position_side"`
-	StartDate    string  `json:"start_date"`
-	EndDate      string  `json:"end_date"`
-	AmountB      float64 `json:"amount_b"`
+	BotId        string `json:"bot_id"`
+	BotOrderID   string `json:"bot_order_id"` // client id
+	Symbol       string `json:"symbol"`
+	PositionSide string `json:"position_side"`
+	StartDate    string `json:"start_date"`
+	EndDate      string `json:"end_date"`
+	AmountB      string `json:"amount_b"`
+	AccountId    string `json:"account_id"`
 }
 
 func (b *BotTimeframeExeIntervalHandlerRequest) Validate() error {
@@ -43,6 +43,7 @@ func (b *BotTimeframeExeIntervalHandlerRequest) ToBotServiceRequest() *domain.Bo
 	svcmodel.SetPositionSide(b.PositionSide)
 	svcmodel.SetStartDate(b.StartDate)
 	svcmodel.SetEndDate(b.EndDate)
-	svcmodel.SetAmountB(strconv.FormatFloat(b.AmountB, 'f', -1, 64))
+	svcmodel.SetAmountB(b.AmountB)
+	svcmodel.SetAccountId(b.AccountId)
 	return svcmodel
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"tradethingbot/cmd/app"
 	route "tradethingbot/cmd/app/route/future"
@@ -45,4 +46,6 @@ func main() {
 		httptransport,
 		httpclient,
 	)
+	port := fmt.Sprintf(":%v", config.Port)
+	app_echo.Start(port)
 }

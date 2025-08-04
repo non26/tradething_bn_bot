@@ -78,4 +78,9 @@ func FutureRoute(
 		process,
 	)
 	group.POST("/timeframe-exe-interval", handler_timeframe_exe_interval.Handle)
+
+	invalidateBotHandler := handler.NewInvalidateBotHandler(
+		process,
+	)
+	group.POST("/invalidate-bot", invalidateBotHandler.Handle)
 }

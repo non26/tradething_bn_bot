@@ -5,6 +5,7 @@ import "errors"
 type ILookUpResult interface {
 	ValidateBotOrderIDWith(reqBotOrderID string) error
 	ValiddatePositionSideWith(reqBotPositionSide string) error
+	GetAmountB() string
 	IsCurrentBotActive() bool
 	IsFirstTime() bool
 }
@@ -12,14 +13,16 @@ type ILookUpResult interface {
 type lookUpResult struct {
 	botOrderID    string
 	positionSide  string
+	amountB       string
 	is_active     bool
 	is_first_time bool
 }
 
-func NewLookUpResult(botOrderID string, positionSide string, is_active bool) ILookUpResult {
+func NewLookUpResult(botOrderID string, positionSide string, amountB string, is_active bool) ILookUpResult {
 	return &lookUpResult{
 		botOrderID:    botOrderID,
 		positionSide:  positionSide,
+		amountB:       amountB,
 		is_active:     is_active,
 		is_first_time: false,
 	}
@@ -53,4 +56,8 @@ func (l *lookUpResult) IsCurrentBotActive() bool {
 
 func (l *lookUpResult) IsFirstTime() bool {
 	return l.is_first_time
+}
+
+func (l *lookUpResult) GetAmountB() string {
+	return l.amountB
 }

@@ -50,7 +50,7 @@ func (b *botLookUp) LookUp(ctx context.Context, position *position.Position) (re
 		return nil, err
 	}
 	if current_position.IsFound() {
-		return domainservice.NewLookUpResult(current_position.BotOrderID, current_position.PositionSide, current_position.IsActive), nil
+		return domainservice.NewLookUpResult(current_position.BotOrderID, current_position.PositionSide, current_position.AmountB, current_position.IsActive), nil
 	}
 
 	return domainservice.NewLookUpResultFirstTime(current_position.BotOrderID, current_position.PositionSide, current_position.IsActive), nil

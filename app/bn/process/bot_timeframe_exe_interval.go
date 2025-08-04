@@ -20,22 +20,24 @@ func (b *botService) BotTimeframeExeInterval(ctx context.Context, req *domain.Bo
 		return nil, errors.New("bot order not found")
 	}
 
-	err = lookUpResult.ValidateBotOrderIDWith(req.GetBotOrderID())
-	if err != nil {
-		return nil, err
-	}
+	if !lookUpResult.IsFirstTime() {
+		err = lookUpResult.ValidateBotOrderIDWith(req.GetBotOrderID())
+		if err != nil {
+			return nil, err
+		}
 
-	err = lookUpResult.ValiddatePositionSideWith(req.GetPositionSide())
-	if err != nil {
-		return nil, err
+		err = lookUpResult.ValiddatePositionSideWith(req.GetPositionSide())
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	if InTime {
-		if !lookUpResult.IsCurrentBotActive() {
-			return nil, errors.New("current bot is not active")
-		}
-
 		if !lookUpResult.IsFirstTime() {
+			if !lookUpResult.IsCurrentBotActive() {
+				return nil, errors.New("current bot is not active")
+			}
+
 			err = b.trade.PlacePosition(ctx, req.ToClosePosition())
 			if err != nil {
 				return nil, err

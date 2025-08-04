@@ -18,6 +18,7 @@ type BotTimeframeExeIntervalRequest struct {
 	amountB      string
 	startDate    time.Time
 	endDate      time.Time
+	accountId    string
 }
 
 func (b *BotTimeframeExeIntervalRequest) SetBotId(botId string) {
@@ -46,6 +47,10 @@ func (b *BotTimeframeExeIntervalRequest) SetInterval(interval string) {
 
 func (b *BotTimeframeExeIntervalRequest) SetAmountB(amountB string) {
 	b.amountB = amountB
+}
+
+func (b *BotTimeframeExeIntervalRequest) SetAccountId(accountId string) {
+	b.accountId = accountId
 }
 
 func (b *BotTimeframeExeIntervalRequest) SetStartDate(startDate string) error {

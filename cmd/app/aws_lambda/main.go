@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"tradethingbot/cmd/app"
 	route "tradethingbot/cmd/app/route/future"
+	routelambda "tradethingbot/cmd/app/route/lambda"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -50,6 +51,7 @@ func init() {
 		httptransport,
 		httpclient,
 	)
+	routelambda.RouteLambda(app_echo, config)
 	echoLambda = echoadapter.New(app_echo)
 }
 

@@ -7,19 +7,19 @@ import (
 	bnconstant "github.com/non26/tradepkg/pkg/bn/bn_constant"
 )
 
-type tradePosition struct {
+type positionBuilder struct {
 	longPosition  position.IPosition
 	shortPosition position.IPosition
 }
 
-func NewFuturePosition(longPosition position.IPosition, shortPosition position.IPosition) ITradePositionBuilder {
-	return &tradePosition{
+func NewFuturePosition(longPosition position.IPosition, shortPosition position.IPosition) IPositionBuilder {
+	return &positionBuilder{
 		longPosition:  longPosition,
 		shortPosition: shortPosition,
 	}
 }
 
-func (f *tradePosition) GetPosition(ctx context.Context, position_side string) position.IPosition {
+func (f *positionBuilder) GetPosition(ctx context.Context, position_side string) position.IPosition {
 	if position_side == bnconstant.LONG {
 		return f.longPosition
 	}

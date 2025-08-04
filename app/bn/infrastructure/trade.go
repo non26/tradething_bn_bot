@@ -9,12 +9,12 @@ import (
 )
 
 type trade struct {
-	position ITradePositionBuilder
+	position IPositionBuilder
 	adaptor  adaptor.IOrderAdaptor
 }
 
 func NewTrade(
-	position ITradePositionBuilder,
+	position IPositionBuilder,
 	adaptor adaptor.IOrderAdaptor,
 ) ITrade {
 	return &trade{

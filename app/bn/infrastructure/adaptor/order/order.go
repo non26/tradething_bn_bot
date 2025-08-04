@@ -1,6 +1,10 @@
 package adaptor
 
-import "context"
+import (
+	"context"
+	req "tradethingbot/app/bn/infrastructure/adaptor/order/req"
+	res "tradethingbot/app/bn/infrastructure/adaptor/order/res"
+)
 
 type orderAdaptor struct {
 	BaseUrl          string
@@ -8,7 +12,7 @@ type orderAdaptor struct {
 }
 
 type IOrderAdaptor interface {
-	NewOrder(ctx context.Context, request *NewOrderRequest) (*NewOrderResponse, error)
+	NewOrder(ctx context.Context, request *req.NewOrderRequest) (*res.NewOrderResponse, error)
 }
 
 func NewOrderAdaptor(

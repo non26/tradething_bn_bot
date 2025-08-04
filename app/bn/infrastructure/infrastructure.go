@@ -6,7 +6,7 @@ import (
 	domainservice "tradethingbot/app/bn/process/domain_service"
 )
 
-type ITradePositionBuilder interface {
+type IPositionBuilder interface {
 	GetPosition(ctx context.Context, position_side string) position.IPosition
 }
 

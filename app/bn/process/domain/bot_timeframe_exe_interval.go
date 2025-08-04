@@ -1,7 +1,6 @@
 package domain
 
 import (
-	"time"
 	"tradethingbot/app/bn/infrastructure/position"
 
 	bnconstant "github.com/non26/tradepkg/pkg/bn/bn_constant"
@@ -16,9 +15,9 @@ type BotTimeframeExeIntervalRequest struct {
 	timeframe    string
 	interval     string
 	amountB      string
-	startDate    time.Time
-	endDate      time.Time
-	accountId    string
+	// startDate    time.Time
+	// endDate      time.Time
+	accountId string
 }
 
 func (b *BotTimeframeExeIntervalRequest) SetBotId(botId string) {
@@ -53,47 +52,47 @@ func (b *BotTimeframeExeIntervalRequest) SetAccountId(accountId string) {
 	b.accountId = accountId
 }
 
-func (b *BotTimeframeExeIntervalRequest) SetStartDate(startDate string) error {
-	parsedTime, err := b.parseRFC3339ToUTC(startDate)
-	if err != nil {
-		return err
-	}
-	b.startDate = parsedTime
-	return nil
-}
+// func (b *BotTimeframeExeIntervalRequest) SetStartDate(startDate string) error {
+// 	parsedTime, err := b.parseRFC3339ToUTC(startDate)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	b.startDate = parsedTime
+// 	return nil
+// }
 
-func (b *BotTimeframeExeIntervalRequest) SetEndDate(endDate string) error {
-	parsedTime, err := b.parseRFC3339ToUTC(endDate)
-	if err != nil {
-		return err
-	}
-	b.endDate = parsedTime
-	return nil
-}
+// func (b *BotTimeframeExeIntervalRequest) SetEndDate(endDate string) error {
+// 	parsedTime, err := b.parseRFC3339ToUTC(endDate)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	b.endDate = parsedTime
+// 	return nil
+// }
 
-func (b *BotTimeframeExeIntervalRequest) parseRFC3339ToUTC(_time string) (time.Time, error) {
-	parsedTime, err := time.Parse(time.RFC3339, _time)
-	if err != nil {
-		return time.Time{}, err
-	}
-	return parsedTime.UTC(), nil
-}
+// func (b *BotTimeframeExeIntervalRequest) parseRFC3339ToUTC(_time string) (time.Time, error) {
+// 	parsedTime, err := time.Parse(time.RFC3339, _time)
+// 	if err != nil {
+// 		return time.Time{}, err
+// 	}
+// 	return parsedTime.UTC(), nil
+// }
 
-func (b *BotTimeframeExeIntervalRequest) IsPresentInTimeframe() bool {
-	presentTime := time.Now().UTC()
-	if b.startDate.Unix() <= presentTime.Unix() && presentTime.Unix() <= b.endDate.Unix() {
-		return true
-	}
-	return false
-}
+// func (b *BotTimeframeExeIntervalRequest) IsPresentInTimeframe() bool {
+// 	presentTime := time.Now().UTC()
+// 	if b.startDate.Unix() <= presentTime.Unix() && presentTime.Unix() <= b.endDate.Unix() {
+// 		return true
+// 	}
+// 	return false
+// }
 
-func (b *BotTimeframeExeIntervalRequest) GetStartDate() time.Time {
-	return b.startDate
-}
+// func (b *BotTimeframeExeIntervalRequest) GetStartDate() time.Time {
+// 	return b.startDate
+// }
 
-func (b *BotTimeframeExeIntervalRequest) GetEndDate() time.Time {
-	return b.endDate
-}
+// func (b *BotTimeframeExeIntervalRequest) GetEndDate() time.Time {
+// 	return b.endDate
+// }
 
 func (b *BotTimeframeExeIntervalRequest) GetBotId() string {
 	return b.botId

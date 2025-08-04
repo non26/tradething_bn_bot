@@ -9,7 +9,8 @@ import (
 
 func (b *botService) BotTimeframeExeInterval(ctx context.Context, req *domain.BotTimeframeExeIntervalRequest) (*res.BotTimeframeExeIntervalResponse, error) {
 
-	InTime := req.IsPresentInTimeframe()
+	// InTime := req.IsPresentInTimeframe()
+	InTime := true
 
 	lookUpResult, err := b.lookUp.LookUp(ctx, req.ToPosition())
 	if err != nil {

@@ -9,6 +9,7 @@ type ILookUpResult interface {
 	IsCurrentBotActive() bool
 	IsFirstTime() bool
 	SetNewIsFirstTime(new bool) bool
+	GetPositionSide() string
 }
 
 type lookUpResult struct {
@@ -66,4 +67,8 @@ func (l *lookUpResult) GetAmountB() string {
 func (l *lookUpResult) SetNewIsFirstTime(new bool) bool {
 	l.is_first_time = new
 	return l.is_first_time
+}
+
+func (l *lookUpResult) GetPositionSide() string {
+	return l.positionSide
 }

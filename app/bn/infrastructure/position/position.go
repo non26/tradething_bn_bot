@@ -15,6 +15,7 @@ type Position struct {
 	Side         string
 	ClientId     string
 	IsActive     bool
+	AccountId    string
 }
 
 func (p *Position) ToPlacePositionModel() *adaptorreq.NewOrderRequest {
@@ -25,6 +26,7 @@ func (p *Position) ToPlacePositionModel() *adaptorreq.NewOrderRequest {
 		Symbol:           p.Symbol,
 		NewClientOrderId: p.ClientId,
 		Type:             "MARKET",
+		AccountId:        p.AccountId,
 	}
 }
 

@@ -5,7 +5,7 @@ import (
 	adaptor "tradethingbot/app/bn/infrastructure/adaptor/trade"
 	"tradethingbot/app/bn/infrastructure/position"
 
-	bnconstant "github.com/non26/tradepkg/pkg/bn/bn_constant"
+	"github.com/non26/tradepkg/pkg/bn/utils"
 )
 
 type trade struct {
@@ -25,7 +25,7 @@ func NewTrade(
 
 func (t *trade) PlacePosition(ctx context.Context, position *position.Position) error {
 	futurePosition := t.position.GetPosition(ctx, position.PositionSide)
-	if position.Side == bnconstant.BUY {
+	if utils.IsBuyPosition(position.Side, position.PositionSide) {
 		return futurePosition.Buy(ctx, position)
 	}
 	return futurePosition.Sell(ctx, position)

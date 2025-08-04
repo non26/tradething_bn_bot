@@ -30,7 +30,20 @@ func (b *botService) BotTimeframeExeInterval(ctx context.Context, req *domain.Bo
 		err = lookUpResult.ValiddatePositionSideWith(req.GetPositionSide())
 		if err != nil {
 			// return nil, err
-			lookUpResult.SetNewIsFirstTime(false)
+			closePosition := domain.BotTimeframeExeIntervalRequest{}
+			closePosition.SetAccountId(req.GetAccountId())
+			closePosition.SetBotId(req.GetBotId())
+			closePosition.SetBotOrderID(req.GetBotOrderID())
+			closePosition.SetSymbol(req.GetSymbol())
+			closePosition.SetPositionSide(lookUpResult.GetPositionSide())
+			closePosition.SetTimeframe(req.GetTimeframe())
+			closePosition.SetInterval(req.GetInterval())
+			closePosition.SetAmountB(req.GetAmountB())
+			err = b.trade.PlacePosition(ctx, closePosition.ToClosePosition())
+			if err != nil {
+				return nil, err
+			}
+			lookUpResult.SetNewIsFirstTime(true)
 		}
 	}
 

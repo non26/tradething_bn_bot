@@ -122,6 +122,10 @@ func (b *BotTimeframeExeIntervalRequest) GetAmountB() string {
 	return b.amountB
 }
 
+func (b *BotTimeframeExeIntervalRequest) GetAccountId() string {
+	return b.accountId
+}
+
 func (b *BotTimeframeExeIntervalRequest) GetOpenSide() string {
 	if utils.IsLongPosition(b.positionSide) {
 		return bnconstant.BUY
@@ -144,6 +148,7 @@ func (b *BotTimeframeExeIntervalRequest) ToPosition() *position.Position {
 		AmountB:      b.amountB,
 		ClientId:     b.botOrderID,
 		IsActive:     true,
+		AccountId:    b.accountId,
 	}
 }
 
@@ -157,6 +162,7 @@ func (b *BotTimeframeExeIntervalRequest) ToOpenPosition() *position.Position {
 		ClientId:     b.botOrderID,
 		Side:         side,
 		IsActive:     true,
+		AccountId:    b.accountId,
 	}
 }
 
@@ -170,6 +176,7 @@ func (b *BotTimeframeExeIntervalRequest) ToClosePosition() *position.Position {
 		ClientId:     b.botOrderID,
 		Side:         side,
 		IsActive:     true,
+		AccountId:    b.accountId,
 	}
 }
 

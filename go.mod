@@ -5,13 +5,15 @@ go 1.24.0
 // replace github.com/non26/tradepkg => ../tradepkg
 
 require (
+	github.com/aws/aws-lambda-go v1.49.0
+	github.com/awslabs/aws-lambda-go-api-proxy v0.16.2
 	github.com/labstack/echo/v4 v4.13.3
 	github.com/non26/tradepkg v0.2.5
 	github.com/spf13/viper v1.19.0
 )
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.32.5 // indirect
+	github.com/aws/aws-sdk-go-v2 v1.37.1 // indirect
 	github.com/aws/aws-sdk-go-v2/config v1.28.5 // indirect
 	github.com/aws/aws-sdk-go-v2/credentials v1.17.46 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.15.17 // indirect
@@ -27,7 +29,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sso v1.24.6 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.28.5 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.33.1 // indirect
-	github.com/aws/smithy-go v1.22.1 // indirect
+	github.com/aws/smithy-go v1.22.5 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
@@ -49,7 +51,7 @@ require (
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.9.0 // indirect
 	golang.org/x/crypto v0.31.0 // indirect
-	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
+	golang.org/x/exp v0.0.0-20240112132812-db7319d0e0e3 // indirect
 	golang.org/x/net v0.33.0 // indirect
 	golang.org/x/sys v0.28.0 // indirect
 	golang.org/x/text v0.21.0 // indirect

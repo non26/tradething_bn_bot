@@ -2,11 +2,11 @@ module tradethingbot
 
 go 1.24.0
 
-replace github.com/non26/tradepkg => ../tradepkg
+// replace github.com/non26/tradepkg => ../tradepkg
 
 require (
 	github.com/labstack/echo/v4 v4.13.3
-	github.com/non26/tradepkg v0.2.2
+	github.com/non26/tradepkg v0.2.5
 	github.com/spf13/viper v1.19.0
 )
 

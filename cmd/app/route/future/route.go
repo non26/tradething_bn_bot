@@ -3,7 +3,7 @@ package route
 import (
 	"tradethingbot/app/bn/handler"
 	"tradethingbot/app/bn/infrastructure"
-	adaptor "tradethingbot/app/bn/infrastructure/adaptor/order"
+	adaptor "tradethingbot/app/bn/infrastructure/adaptor/trade"
 	"tradethingbot/app/bn/infrastructure/position"
 	"tradethingbot/app/bn/process"
 	"tradethingbot/config"

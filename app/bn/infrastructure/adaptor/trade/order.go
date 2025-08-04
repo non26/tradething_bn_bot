@@ -2,8 +2,8 @@ package adaptor
 
 import (
 	"context"
-	req "tradethingbot/app/bn/infrastructure/adaptor/order/req"
-	res "tradethingbot/app/bn/infrastructure/adaptor/order/res"
+	req "tradethingbot/app/bn/infrastructure/adaptor/trade/req"
+	res "tradethingbot/app/bn/infrastructure/adaptor/trade/res"
 )
 
 type orderAdaptor struct {

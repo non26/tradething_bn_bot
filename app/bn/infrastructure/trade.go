@@ -2,7 +2,7 @@ package infrastructure
 
 import (
 	"context"
-	adaptor "tradethingbot/app/bn/infrastructure/adaptor/order"
+	adaptor "tradethingbot/app/bn/infrastructure/adaptor/trade"
 	"tradethingbot/app/bn/infrastructure/position"
 
 	bnconstant "github.com/non26/tradepkg/pkg/bn/bn_constant"

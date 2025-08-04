@@ -2,7 +2,7 @@ package position
 
 import (
 	"context"
-	adaptorreq "tradethingbot/app/bn/infrastructure/adaptor/order/req"
+	adaptorreq "tradethingbot/app/bn/infrastructure/adaptor/trade/req"
 
 	dynamodbmodel "github.com/non26/tradepkg/pkg/bn/dynamodb_future/models"
 )

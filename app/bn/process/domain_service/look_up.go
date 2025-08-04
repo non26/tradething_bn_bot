@@ -10,6 +10,7 @@ type ILookUpResult interface {
 	IsFirstTime() bool
 	SetNewIsFirstTime(new bool) bool
 	GetPositionSide() string
+	GetSymbol() string
 }
 
 type lookUpResult struct {
@@ -18,12 +19,14 @@ type lookUpResult struct {
 	amountB       string
 	is_active     bool
 	is_first_time bool
+	symbol        string
 }
 
-func NewLookUpResult(botOrderID string, positionSide string, amountB string, is_active bool) ILookUpResult {
+func NewLookUpResult(botOrderID string, positionSide string, amountB string, is_active bool, symbol string) ILookUpResult {
 	return &lookUpResult{
 		botOrderID:    botOrderID,
 		positionSide:  positionSide,
+		symbol:        symbol,
 		amountB:       amountB,
 		is_active:     is_active,
 		is_first_time: false,
@@ -71,4 +74,8 @@ func (l *lookUpResult) SetNewIsFirstTime(new bool) bool {
 
 func (l *lookUpResult) GetPositionSide() string {
 	return l.positionSide
+}
+
+func (l *lookUpResult) GetSymbol() string {
+	return l.symbol
 }

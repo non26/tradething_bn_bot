@@ -26,12 +26,11 @@ func (b *botService) InvalidateBot(ctx context.Context, req *domain.InvalidateBo
 		return nil, err
 	}
 
-	err = lookUpResult.ValiddatePositionSideWith(req.PositionSide)
-	if err != nil {
-		return nil, err
-	}
+	position.PositionSide = lookUpResult.GetPositionSide()
 	position.AmountB = lookUpResult.GetAmountB()
-	if req.PositionSide == bnconstant.LONG {
+	position.Symbol = lookUpResult.GetSymbol()
+
+	if position.PositionSide == bnconstant.LONG {
 		position.Side = bnconstant.SELL
 	} else {
 		position.Side = bnconstant.BUY

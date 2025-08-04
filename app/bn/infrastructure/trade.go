@@ -2,20 +2,20 @@ package infrastructure
 
 import (
 	"context"
-	"tradethingbot/app/bn/infrastructure/adaptor"
+	adaptor "tradethingbot/app/bn/infrastructure/adaptor/order"
 	"tradethingbot/app/bn/infrastructure/position"
 
 	bnconstant "github.com/non26/tradepkg/pkg/bn/bn_constant"
 )
 
 type trade struct {
-	position ITradePosition
-	adaptor  adaptor.IBinanceFutureTradeService
+	position ITradePositionBuilder
+	adaptor  adaptor.IOrderAdaptor
 }
 
 func NewTrade(
-	position ITradePosition,
-	adaptor adaptor.IBinanceFutureTradeService,
+	position ITradePositionBuilder,
+	adaptor adaptor.IOrderAdaptor,
 ) ITrade {
 	return &trade{
 		position: position,

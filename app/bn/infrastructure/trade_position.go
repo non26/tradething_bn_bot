@@ -12,7 +12,7 @@ type tradePosition struct {
 	shortPosition position.IPosition
 }
 
-func NewFuturePosition(longPosition position.IPosition, shortPosition position.IPosition) ITradePosition {
+func NewFuturePosition(longPosition position.IPosition, shortPosition position.IPosition) ITradePositionBuilder {
 	return &tradePosition{
 		longPosition:  longPosition,
 		shortPosition: shortPosition,

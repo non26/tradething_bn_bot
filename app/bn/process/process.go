@@ -15,7 +15,6 @@ type IBotService interface {
 }
 
 type botService struct {
-	// binanceService     bntrade.IBinanceFutureExternalService
 	bnFtBotTable      bndynamodb.IBnFtBotRepository
 	bnFtBotOnRunTable bndynamodb.IBnFtBotOnRunRepository
 	bnFtHistoryTable  bndynamodb.IBnFtHistoryRepository

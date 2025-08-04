@@ -2,7 +2,7 @@ package position
 
 import (
 	"context"
-	"tradethingbot/app/bn/infrastructure/adaptor"
+	adaptor "tradethingbot/app/bn/infrastructure/adaptor/order"
 
 	bndynamodb "github.com/non26/tradepkg/pkg/bn/dynamodb_future"
 )
@@ -11,14 +11,14 @@ type shortPosition struct {
 	historyTable  bndynamodb.IBnFtHistoryRepository
 	botTable      bndynamodb.IBnFtBotRepository
 	botOnRunTable bndynamodb.IBnFtBotOnRunRepository
-	adaptor       adaptor.IBinanceFutureTradeService
+	adaptor       adaptor.IOrderAdaptor
 }
 
 func NewShortPosition(
 	historyTable bndynamodb.IBnFtHistoryRepository,
 	botTable bndynamodb.IBnFtBotRepository,
 	botOnRunTable bndynamodb.IBnFtBotOnRunRepository,
-	adaptor adaptor.IBinanceFutureTradeService,
+	adaptor adaptor.IOrderAdaptor,
 ) IPosition {
 	return &shortPosition{
 		historyTable:  historyTable,
@@ -30,7 +30,7 @@ func NewShortPosition(
 }
 
 func (s *shortPosition) Buy(ctx context.Context, position *Position) error {
-	_, err := s.adaptor.PlaceOrder(ctx, position.ToPlacePositionModel())
+	_, err := s.adaptor.NewOrder(ctx, position.ToPlacePositionModel())
 	if err != nil {
 		return err
 	}
@@ -44,7 +44,7 @@ func (s *shortPosition) Buy(ctx context.Context, position *Position) error {
 }
 
 func (s *shortPosition) Sell(ctx context.Context, position *Position) error {
-	_, err := s.adaptor.PlaceOrder(ctx, position.ToPlacePositionModel())
+	_, err := s.adaptor.NewOrder(ctx, position.ToPlacePositionModel())
 	if err != nil {
 		return err
 	}
@@ -53,7 +53,7 @@ func (s *shortPosition) Sell(ctx context.Context, position *Position) error {
 }
 
 func (s *shortPosition) Invalidate(ctx context.Context, position *Position) error {
-	_, err := s.adaptor.PlaceOrder(ctx, position.ToPlacePositionModel())
+	_, err := s.adaptor.NewOrder(ctx, position.ToPlacePositionModel())
 	if err != nil {
 		return err
 	}

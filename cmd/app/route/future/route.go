@@ -3,7 +3,7 @@ package route
 import (
 	"tradethingbot/app/bn/handler"
 	"tradethingbot/app/bn/infrastructure"
-	"tradethingbot/app/bn/infrastructure/adaptor"
+	adaptor "tradethingbot/app/bn/infrastructure/adaptor/order"
 	"tradethingbot/app/bn/infrastructure/position"
 	"tradethingbot/app/bn/process"
 	"tradethingbot/config"
@@ -24,29 +24,24 @@ func FutureRoute(
 	httpttransport bntransport.IBinanceServiceHttpTransport,
 	httpclient bnclient.IBinanceSerivceHttpClient,
 ) {
-	group := app.Group("/" + config.ServiceName.BinanceFuture)
 
-	adaptor := adaptor.NewBinanceFutureAdaptorService(
-		&config.BinanceFutureUrl,
-		config.Secrets.BinanceApiKey,
-		config.Secrets.BinanceSecretKey,
-		config.ServiceName.BinanceFuture,
-		httpttransport,
-		httpclient,
+	adaptorTradeOrder := adaptor.NewOrderAdaptor(
+		config.BinanceFutureUrl.BaseUrl,
+		config.BinanceFutureUrl.SingleOrder,
 	)
 
 	longPosition := position.NewLongPosition(
 		historyTable,
 		botTable,
 		botOnRunTable,
-		adaptor,
+		adaptorTradeOrder,
 	)
 
 	shortPosition := position.NewShortPosition(
 		historyTable,
 		botTable,
 		botOnRunTable,
-		adaptor,
+		adaptorTradeOrder,
 	)
 
 	positionBuilder := infrastructure.NewFuturePosition(
@@ -56,7 +51,7 @@ func FutureRoute(
 
 	trade := infrastructure.NewTrade(
 		positionBuilder,
-		adaptor,
+		adaptorTradeOrder,
 	)
 
 	lookUp := infrastructure.NewBotLookUp(
@@ -77,10 +72,10 @@ func FutureRoute(
 	handler_timeframe_exe_interval := handler.NewBotTimeframeExeIntervalHandler(
 		process,
 	)
-	group.POST("/timeframe-exe-interval", handler_timeframe_exe_interval.Handle)
+	app.POST("/timeframe-exe-interval", handler_timeframe_exe_interval.Handle)
 
 	invalidateBotHandler := handler.NewInvalidateBotHandler(
 		process,
 	)
-	group.POST("/invalidate-bot", invalidateBotHandler.Handle)
+	app.POST("/invalidate-bot", invalidateBotHandler.Handle)
 }

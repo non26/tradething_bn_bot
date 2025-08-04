@@ -7,14 +7,14 @@ import (
 )
 
 type BotTimeframeExeIntervalHandlerRequest struct {
-	BotId        string `json:"bot_id"`
-	BotOrderID   string `json:"bot_order_id"` // client id
+	BotId        string `json:"botId"`
+	BotOrderID   string `json:"botOrderId"` // client id
 	Symbol       string `json:"symbol"`
-	PositionSide string `json:"position_side"`
-	StartDate    string `json:"start_date"`
-	EndDate      string `json:"end_date"`
-	AmountB      string `json:"amount_b"`
-	AccountId    string `json:"account_id"`
+	PositionSide string `json:"positionSide"`
+	StartDate    string `json:"startDate"`
+	EndDate      string `json:"endDate"`
+	AmountB      string `json:"amountB"`
+	AccountId    string `json:"accountId"`
 }
 
 func (b *BotTimeframeExeIntervalHandlerRequest) Validate() error {

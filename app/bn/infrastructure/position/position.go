@@ -2,7 +2,7 @@ package position
 
 import (
 	"context"
-	"tradethingbot/app/bn/infrastructure/adaptor/req"
+	req "tradethingbot/app/bn/infrastructure/adaptor/order"
 
 	dynamodbmodel "github.com/non26/tradepkg/pkg/bn/dynamodb_future/models"
 )
@@ -17,13 +17,14 @@ type Position struct {
 	IsActive     bool
 }
 
-func (p *Position) ToPlacePositionModel() *req.PlacePosition {
-	return &req.PlacePosition{
-		PositionSide:  p.PositionSide,
-		Side:          p.Side,
-		EntryQuantity: p.AmountB,
-		Symbol:        p.Symbol,
-		ClientOrderId: p.ClientId,
+func (p *Position) ToPlacePositionModel() *req.NewOrderRequest {
+	return &req.NewOrderRequest{
+		PositionSide:     p.PositionSide,
+		Side:             p.Side,
+		Quantity:         p.AmountB,
+		Symbol:           p.Symbol,
+		NewClientOrderId: p.ClientId,
+		Type:             "MARKET",
 	}
 }
 

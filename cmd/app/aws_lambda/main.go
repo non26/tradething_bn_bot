@@ -21,7 +21,7 @@ import (
 var echoLambda *echoadapter.EchoLambda
 
 func init() {
-	config, err := app.ReadLog("./config")
+	config, err := app.ReadAWSAppLog()
 	if err != nil {
 		panic(err.Error())
 	}

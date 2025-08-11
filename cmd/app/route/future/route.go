@@ -82,4 +82,14 @@ func FutureRoute(
 		process,
 	)
 	app.POST("/invalidate-bot", invalidateBotHandler.Handle)
+
+	activateHandler := handler.NewActivateHandler(
+		process,
+	)
+	app.POST("/activate-bot", activateHandler.HandleActivate)
+
+	deactivateHandler := handler.NewDeactivateHandler(
+		process,
+	)
+	app.POST("/deactivate-bot", deactivateHandler.HandleDeactivate)
 }

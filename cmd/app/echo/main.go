@@ -48,4 +48,9 @@ func main() {
 	)
 	port := fmt.Sprintf(":%v", config.Port)
 	app_echo.Start(port)
+
+	// TODO
+	// - เพิ่มเส้น api activate/ deactivate api
+	// - delay การทำงานของ bot ตามที่กำหนดไว้ในระบบ
+	// - เพิ่ม account id ใน db
 }

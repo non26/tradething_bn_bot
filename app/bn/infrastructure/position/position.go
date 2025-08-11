@@ -16,6 +16,7 @@ type Position struct {
 	ClientId     string
 	IsActive     bool
 	AccountId    string
+	Setting      []byte
 }
 
 func (p *Position) ToPlacePositionModel() *adaptorreq.NewOrderRequest {
@@ -31,14 +32,18 @@ func (p *Position) ToPlacePositionModel() *adaptorreq.NewOrderRequest {
 }
 
 func (p *Position) ToBnFtBotOnRunTable() *dynamodbmodel.BnFtBotOnRun {
-	return &dynamodbmodel.BnFtBotOnRun{
+	fields := &dynamodbmodel.BnFtBotOnRun{
 		BotID:        p.BotID,
 		Symbol:       p.Symbol,
 		PositionSide: p.PositionSide,
 		AmountB:      p.AmountB,
 		IsActive:     p.IsActive,
 		BotOrderID:   p.ClientId,
+		AccountId:    p.AccountId,
 	}
+	fields.SetSetting(p.Setting)
+	return fields
+
 }
 
 func (p *Position) ToBnFtHistoryTable() *dynamodbmodel.BnFtHistory {

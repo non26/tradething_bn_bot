@@ -9,10 +9,8 @@ type BotTimeframeExeIntervalHandlerRequest struct {
 	BotOrderID   string `json:"botOrderId"` // client id
 	Symbol       string `json:"symbol"`
 	PositionSide string `json:"positionSide"`
-	// StartDate    string `json:"startDate"`
-	// EndDate      string `json:"endDate"`
-	AmountB   string `json:"amountB"`
-	AccountId string `json:"accountId"`
+	AmountB      string `json:"amountB"`
+	AccountId    string `json:"accountId"`
 }
 
 func (b *BotTimeframeExeIntervalHandlerRequest) Validate() error {
@@ -39,8 +37,6 @@ func (b *BotTimeframeExeIntervalHandlerRequest) ToBotServiceRequest() *domain.Bo
 	svcmodel.SetBotOrderID(b.BotOrderID)
 	svcmodel.SetSymbol(b.Symbol)
 	svcmodel.SetPositionSide(b.PositionSide)
-	// svcmodel.SetStartDate(b.StartDate)
-	// svcmodel.SetEndDate(b.EndDate)
 	svcmodel.SetAmountB(b.AmountB)
 	svcmodel.SetAccountId(b.AccountId)
 	return svcmodel

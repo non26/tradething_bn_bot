@@ -17,4 +17,10 @@ type ITrade interface {
 
 type IBotLookUp interface {
 	LookUp(ctx context.Context, position *position.Position) (result domainservice.ILookUpResult, err error)
+	// LookUpByBotIdAndBotOrderId(ctx context.Context, botId string, botOrderId string) (result domainservice.ILookUpResult, err error)
+}
+
+type IBotOnRunStore interface {
+	Create(ctx context.Context, position *position.Position) error
+	GetAll(ctx context.Context) ([]*position.Position, error)
 }

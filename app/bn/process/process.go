@@ -5,38 +5,29 @@ import (
 	"tradethingbot/app/bn/handler/res"
 	"tradethingbot/app/bn/infrastructure"
 	"tradethingbot/app/bn/process/domain"
-
-	bndynamodb "github.com/non26/tradepkg/pkg/bn/dynamodb_future"
 )
 
 type IBotService interface {
 	InvalidateBot(ctx context.Context, req *domain.InvalidateBot) (*res.InvalidateBotHandlerResponse, error)
 	BotTimeframeExeInterval(ctx context.Context, req *domain.BotTimeframeExeIntervalRequest) (*res.BotTimeframeExeIntervalResponse, error)
+	SetBotTimeframeExeInterval(ctx context.Context, req *domain.BotTimeframeExeIntervalRequest) (*res.BotTimeframeExeIntervalDetailResponse, error)
+	GetBotTimeframeExeInterval(ctx context.Context) ([]res.BotTimeframeExeIntervalDetailResponse, error)
 }
 
 type botService struct {
-	bnFtBotTable      bndynamodb.IBnFtBotRepository
-	bnFtBotOnRunTable bndynamodb.IBnFtBotOnRunRepository
-	bnFtHistoryTable  bndynamodb.IBnFtHistoryRepository
-	bnFtCryptoTable   bndynamodb.IBnFtCryptoRepository
-	trade             infrastructure.ITrade
-	lookUp            infrastructure.IBotLookUp
+	trade  infrastructure.ITrade
+	lookUp infrastructure.IBotLookUp
+	store  infrastructure.IBotOnRunStore
 }
 
 func NewBotService(
-	bnFtBotTable bndynamodb.IBnFtBotRepository,
-	bnFtBotOnRunTable bndynamodb.IBnFtBotOnRunRepository,
-	bnFtHistoryTable bndynamodb.IBnFtHistoryRepository,
-	bnFtCryptoTable bndynamodb.IBnFtCryptoRepository,
 	trade infrastructure.ITrade,
 	lookUp infrastructure.IBotLookUp,
+	store infrastructure.IBotOnRunStore,
 ) IBotService {
 	return &botService{
-		bnFtBotTable:      bnFtBotTable,
-		bnFtBotOnRunTable: bnFtBotOnRunTable,
-		bnFtHistoryTable:  bnFtHistoryTable,
-		bnFtCryptoTable:   bnFtCryptoTable,
-		trade:             trade,
-		lookUp:            lookUp,
+		trade:  trade,
+		lookUp: lookUp,
+		store:  store,
 	}
 }

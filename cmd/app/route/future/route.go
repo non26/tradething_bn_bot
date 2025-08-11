@@ -60,19 +60,23 @@ func FutureRoute(
 		botOnRunTable,
 	)
 
-	process := process.NewBotService(
-		botTable,
+	botOnRunStore := infrastructure.NewBotOnRunStore(
 		botOnRunTable,
-		historyTable,
-		bnFtCryptoTable,
+	)
+
+	process := process.NewBotService(
 		trade,
 		lookUp,
+		botOnRunStore,
 	)
 
 	handler_timeframe_exe_interval := handler.NewBotTimeframeExeIntervalHandler(
 		process,
 	)
-	app.POST("/timeframe-exe-interval", handler_timeframe_exe_interval.Handle)
+	path1 := "/timeframe-exe-interval"
+	app.POST(path1, handler_timeframe_exe_interval.HandleBot)
+	app.POST(path1+"/set", handler_timeframe_exe_interval.HandlerSetBotTimeframeExeInterval)
+	app.POST(path1+"/get", handler_timeframe_exe_interval.HandlerGetBotTimeframeExeInterval)
 
 	invalidateBotHandler := handler.NewInvalidateBotHandler(
 		process,

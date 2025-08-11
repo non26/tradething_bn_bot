@@ -49,6 +49,9 @@ func (b *botLookUp) LookUp(ctx context.Context, position *position.Position) (re
 	if err != nil {
 		return nil, err
 	}
+	if current_position == nil {
+		return nil, nil
+	}
 	if current_position.IsFound() {
 		return domainservice.NewLookUpResult(current_position.BotOrderID, current_position.PositionSide, current_position.AmountB, current_position.IsActive, current_position.Symbol), nil
 	}

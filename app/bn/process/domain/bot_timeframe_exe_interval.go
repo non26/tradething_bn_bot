@@ -36,13 +36,13 @@ func (b *BotTimeframeExeIntervalRequest) SetPositionSide(positionSide string) {
 	b.positionSide = positionSide
 }
 
-func (b *BotTimeframeExeIntervalRequest) SetTimeframe(timeframe string) {
-	b.timeframe = timeframe
-}
+// func (b *BotTimeframeExeIntervalRequest) SetTimeframe(timeframe string) {
+// 	b.timeframe = timeframe
+// }
 
-func (b *BotTimeframeExeIntervalRequest) SetInterval(interval string) {
-	b.interval = interval
-}
+// func (b *BotTimeframeExeIntervalRequest) SetInterval(interval string) {
+// 	b.interval = interval
+// }
 
 func (b *BotTimeframeExeIntervalRequest) SetAmountB(amountB string) {
 	b.amountB = amountB
@@ -110,13 +110,13 @@ func (b *BotTimeframeExeIntervalRequest) GetPositionSide() string {
 	return b.positionSide
 }
 
-func (b *BotTimeframeExeIntervalRequest) GetTimeframe() string {
-	return b.timeframe
-}
+// func (b *BotTimeframeExeIntervalRequest) GetTimeframe() string {
+// 	return b.timeframe
+// }
 
-func (b *BotTimeframeExeIntervalRequest) GetInterval() string {
-	return b.interval
-}
+// func (b *BotTimeframeExeIntervalRequest) GetInterval() string {
+// 	return b.interval
+// }
 
 func (b *BotTimeframeExeIntervalRequest) GetAmountB() string {
 	return b.amountB

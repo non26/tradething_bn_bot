@@ -36,8 +36,6 @@ func (b *botService) BotTimeframeExeInterval(ctx context.Context, req *domain.Bo
 			closePosition.SetBotOrderID(req.GetBotOrderID())
 			closePosition.SetSymbol(req.GetSymbol())
 			closePosition.SetPositionSide(lookUpResult.GetPositionSide())
-			closePosition.SetTimeframe(req.GetTimeframe())
-			closePosition.SetInterval(req.GetInterval())
 			closePosition.SetAmountB(req.GetAmountB())
 			err = b.trade.PlacePosition(ctx, closePosition.ToClosePosition())
 			if err != nil {

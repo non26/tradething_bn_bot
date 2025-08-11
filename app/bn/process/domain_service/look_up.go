@@ -14,29 +14,40 @@ type ILookUpResult interface {
 }
 
 type lookUpResult struct {
+	botId         string
 	botOrderID    string
 	positionSide  string
 	amountB       string
-	is_active     bool
-	is_first_time bool
 	symbol        string
+	is_active     bool
+	accountId     string
+	setting       string
+	is_first_time bool
 }
 
-func NewLookUpResult(botOrderID string, positionSide string, amountB string, is_active bool, symbol string) ILookUpResult {
+func NewLookUpResult(botId string, botOrderID string, positionSide string, amountB string, symbol string, accountId string, setting string, is_active bool) ILookUpResult {
 	return &lookUpResult{
+		botId:         botId,
 		botOrderID:    botOrderID,
 		positionSide:  positionSide,
 		symbol:        symbol,
 		amountB:       amountB,
+		accountId:     accountId,
+		setting:       setting,
 		is_active:     is_active,
 		is_first_time: false,
 	}
 }
 
-func NewLookUpResultFirstTime(botOrderID string, positionSide string, is_active bool) ILookUpResult {
+func NewLookUpResultFirstTime(botId string, botOrderID string, positionSide string, amountB string, symbol string, accountId string, setting string, is_active bool) ILookUpResult {
 	return &lookUpResult{
+		botId:         botId,
 		botOrderID:    botOrderID,
 		positionSide:  positionSide,
+		symbol:        symbol,
+		amountB:       amountB,
+		accountId:     accountId,
+		setting:       setting,
 		is_active:     is_active,
 		is_first_time: true,
 	}
@@ -78,4 +89,16 @@ func (l *lookUpResult) GetPositionSide() string {
 
 func (l *lookUpResult) GetSymbol() string {
 	return l.symbol
+}
+
+func (l *lookUpResult) GetBotId() string {
+	return l.botId
+}
+
+func (l *lookUpResult) GetAccountId() string {
+	return l.accountId
+}
+
+func (l *lookUpResult) GetSetting() string {
+	return l.setting
 }

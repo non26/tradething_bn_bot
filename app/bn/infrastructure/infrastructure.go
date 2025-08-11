@@ -21,6 +21,7 @@ type IBotLookUp interface {
 }
 
 type IBotOnRunStore interface {
-	Create(ctx context.Context, position *position.Position) error
+	Upsert(ctx context.Context, position *position.Position) error
 	GetAll(ctx context.Context) ([]*position.Position, error)
+	Get(ctx context.Context, position *position.Position) (*position.Position, error)
 }

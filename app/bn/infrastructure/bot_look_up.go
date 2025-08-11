@@ -53,8 +53,26 @@ func (b *botLookUp) LookUp(ctx context.Context, position *position.Position) (re
 		return nil, nil
 	}
 	if current_position.IsFound() {
-		return domainservice.NewLookUpResult(current_position.BotOrderID, current_position.PositionSide, current_position.AmountB, current_position.IsActive, current_position.Symbol), nil
+		return domainservice.NewLookUpResult(
+			current_position.BotID,
+			current_position.BotOrderID,
+			current_position.PositionSide,
+			current_position.AmountB,
+			current_position.Symbol,
+			current_position.AccountId,
+			current_position.Setting,
+			current_position.IsActive,
+		), nil
 	}
 
-	return domainservice.NewLookUpResultFirstTime(current_position.BotOrderID, current_position.PositionSide, current_position.IsActive), nil
+	return domainservice.NewLookUpResultFirstTime(
+		current_position.BotID,
+		current_position.BotOrderID,
+		current_position.PositionSide,
+		current_position.AmountB,
+		current_position.Symbol,
+		current_position.AccountId,
+		current_position.Setting,
+		current_position.IsActive,
+	), nil
 }

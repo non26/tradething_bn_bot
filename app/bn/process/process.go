@@ -12,6 +12,8 @@ type IBotService interface {
 	BotTimeframeExeInterval(ctx context.Context, req *domain.BotTimeframeExeIntervalRequest) (*res.BotTimeframeExeIntervalResponse, error)
 	SetBotTimeframeExeInterval(ctx context.Context, req *domain.BotTimeframeExeIntervalRequest) (*res.BotTimeframeExeIntervalDetailResponse, error)
 	GetBotTimeframeExeInterval(ctx context.Context) ([]res.BotTimeframeExeIntervalDetailResponse, error)
+	ActivateBot(ctx context.Context, req []domain.Activation) ([]res.ActivationResponse, error)
+	DeactivateBot(ctx context.Context, req []domain.Activation) ([]res.ActivationResponse, error)
 }
 
 type botService struct {

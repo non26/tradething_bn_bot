@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"context"
+	"tradethingbot/app/bn/infrastructure"
 	"tradethingbot/app/bn/infrastructure/position"
 
 	bnconstant "github.com/non26/tradepkg/pkg/bn/bn_constant"
@@ -12,7 +13,7 @@ type positionBuilder struct {
 	shortPosition position.IPosition
 }
 
-func NewFuturePosition(longPosition position.IPosition, shortPosition position.IPosition) IPositionBuilder {
+func NewFuturePosition(longPosition position.IPosition, shortPosition position.IPosition) infrastructure.IPositionBuilder {
 	return &positionBuilder{
 		longPosition:  longPosition,
 		shortPosition: shortPosition,

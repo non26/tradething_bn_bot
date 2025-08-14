@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"context"
+	"tradethingbot/app/bn/infrastructure"
 	"tradethingbot/app/bn/infrastructure/position"
 
 	bndynamodb "github.com/non26/tradepkg/pkg/bn/dynamodb_future"
@@ -13,7 +14,7 @@ type botOnRunStore struct {
 
 func NewBotOnRunStore(
 	botOnRunTable bndynamodb.IBnFtBotOnRunRepository,
-) IBotOnRunStore {
+) infrastructure.IBotOnRunStore {
 	return &botOnRunStore{
 		botOnRunTable: botOnRunTable,
 	}

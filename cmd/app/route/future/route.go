@@ -2,9 +2,13 @@ package route
 
 import (
 	"tradethingbot/app/bn/handler"
-	"tradethingbot/app/bn/infrastructure"
+	handlerbottimeframeexeinterval "tradethingbot/app/bn/handler/bot_timeframe_exe_interval"
 	adaptor "tradethingbot/app/bn/infrastructure/adaptor/trade"
+	infrastructure "tradethingbot/app/bn/infrastructure/builder"
+	infralookup "tradethingbot/app/bn/infrastructure/lookup"
 	"tradethingbot/app/bn/infrastructure/position"
+	infrastore "tradethingbot/app/bn/infrastructure/store"
+	infratrade "tradethingbot/app/bn/infrastructure/trade"
 	"tradethingbot/app/bn/process"
 	"tradethingbot/config"
 
@@ -49,18 +53,18 @@ func FutureRoute(
 		shortPosition,
 	)
 
-	trade := infrastructure.NewTrade(
+	trade := infratrade.NewTrade(
 		positionBuilder,
 		adaptorTradeOrder,
 	)
 
-	lookUp := infrastructure.NewBotLookUp(
+	lookUp := infralookup.NewBotLookUp(
 		botTable,
 		historyTable,
 		botOnRunTable,
 	)
 
-	botOnRunStore := infrastructure.NewBotOnRunStore(
+	botOnRunStore := infrastore.NewBotOnRunStore(
 		botOnRunTable,
 	)
 
@@ -71,7 +75,7 @@ func FutureRoute(
 		config.BOTId,
 	)
 
-	handler_timeframe_exe_interval := handler.NewBotTimeframeExeIntervalHandler(
+	handler_timeframe_exe_interval := handlerbottimeframeexeinterval.NewBotTimeframeExeIntervalHandler(
 		process,
 	)
 	pathTimeframeExeInterval := "/timeframe-exe-interval"

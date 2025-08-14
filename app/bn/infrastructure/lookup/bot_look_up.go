@@ -3,6 +3,7 @@ package infrastructure
 import (
 	"context"
 	"errors"
+	"tradethingbot/app/bn/infrastructure"
 	"tradethingbot/app/bn/infrastructure/position"
 	domainservice "tradethingbot/app/bn/process/domain_service"
 
@@ -19,7 +20,7 @@ func NewBotLookUp(
 	botTable bndynamodb.IBnFtBotRepository,
 	historyTable bndynamodb.IBnFtHistoryRepository,
 	botOnRunTable bndynamodb.IBnFtBotOnRunRepository,
-) IBotLookUp {
+) infrastructure.IBotLookUp {
 	return &botLookUp{
 		botTable:      botTable,
 		historyTable:  historyTable,

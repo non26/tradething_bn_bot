@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"context"
+	"tradethingbot/app/bn/infrastructure"
 	adaptor "tradethingbot/app/bn/infrastructure/adaptor/trade"
 	"tradethingbot/app/bn/infrastructure/position"
 
@@ -9,14 +10,14 @@ import (
 )
 
 type trade struct {
-	position IPositionBuilder
+	position infrastructure.IPositionBuilder
 	adaptor  adaptor.IOrderAdaptor
 }
 
 func NewTrade(
-	position IPositionBuilder,
+	position infrastructure.IPositionBuilder,
 	adaptor adaptor.IOrderAdaptor,
-) ITrade {
+) infrastructure.ITrade {
 	return &trade{
 		position: position,
 		adaptor:  adaptor,

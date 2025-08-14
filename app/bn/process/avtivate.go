@@ -8,7 +8,7 @@ import (
 )
 
 func (b *botService) ActivateBot(ctx context.Context, req []domain.Activation) ([]res.ActivationResponse, error) {
-	responses := make([]res.ActivationResponse, len(req))
+	responses := make([]res.ActivationResponse, 0)
 	for _, activation := range req {
 		response := res.ActivationResponse{
 			BotId:      activation.BotId,
@@ -30,19 +30,6 @@ func (b *botService) ActivateBot(ctx context.Context, req []domain.Activation) (
 			responses = append(responses, response)
 			continue
 		}
-		tfIntervalRequest := &domain.BotTimeframeExeIntervalRequest{}
-		tfIntervalRequest.SetBotId(bot.BotID)
-		tfIntervalRequest.SetBotOrderID(bot.ClientId)
-		tfIntervalRequest.SetSymbol(bot.Symbol)
-		tfIntervalRequest.SetPositionSide(bot.PositionSide)
-		tfIntervalRequest.SetAmountB(bot.AmountB)
-		tfIntervalRequest.SetAccountId(bot.AccountId)
-		_, err = b.BotTimeframeExeInterval(ctx, tfIntervalRequest)
-		if err != nil {
-			response.SetFailed(err.Error())
-			responses = append(responses, response)
-			continue
-		}
 
 		activatePosition := &position.Position{
 			BotID:        bot.BotID,
@@ -55,6 +42,20 @@ func (b *botService) ActivateBot(ctx context.Context, req []domain.Activation) (
 		}
 
 		err = b.store.Upsert(ctx, activatePosition)
+		if err != nil {
+			response.SetFailed(err.Error())
+			responses = append(responses, response)
+			continue
+		}
+
+		tfIntervalRequest := &domain.BotTimeframeExeIntervalRequest{}
+		tfIntervalRequest.SetBotId(bot.BotID)
+		tfIntervalRequest.SetBotOrderID(bot.ClientId)
+		tfIntervalRequest.SetSymbol(bot.Symbol)
+		tfIntervalRequest.SetPositionSide(bot.PositionSide)
+		tfIntervalRequest.SetAmountB(bot.AmountB)
+		tfIntervalRequest.SetAccountId(bot.AccountId)
+		_, err = b.BotTimeframeExeInterval(ctx, tfIntervalRequest)
 		if err != nil {
 			response.SetFailed(err.Error())
 			responses = append(responses, response)

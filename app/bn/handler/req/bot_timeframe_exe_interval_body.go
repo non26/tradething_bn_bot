@@ -11,6 +11,8 @@ type BotTimeframeExeIntervalHandlerRequest struct {
 	PositionSide string `json:"positionSide"`
 	AmountB      string `json:"amountB"`
 	AccountId    string `json:"accountId"`
+	IsActive     *bool  `json:"isActive,omitempty"`
+	BotRequestAspect
 }
 
 func (b *BotTimeframeExeIntervalHandlerRequest) Validate() error {
@@ -39,5 +41,7 @@ func (b *BotTimeframeExeIntervalHandlerRequest) ToBotServiceRequest() *domain.Bo
 	svcmodel.SetPositionSide(b.PositionSide)
 	svcmodel.SetAmountB(b.AmountB)
 	svcmodel.SetAccountId(b.AccountId)
+	svcmodel.SetDelayTime(b.BotRequestAspect.DelayBotRequest.DelayTime)
+	svcmodel.SetIsActive(b.IsActive)
 	return svcmodel
 }

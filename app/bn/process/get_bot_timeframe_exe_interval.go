@@ -11,8 +11,11 @@ func (b *botService) GetBotTimeframeExeInterval(ctx context.Context) ([]res.BotT
 		return nil, err
 	}
 
-	result := make([]res.BotTimeframeExeIntervalDetailResponse, len(positions))
+	result := make([]res.BotTimeframeExeIntervalDetailResponse, 0)
 	for _, position := range positions {
+		if position == nil {
+			continue
+		}
 		detail := res.BotTimeframeExeIntervalDetailResponse{
 			BotId:        position.BotID,
 			BotOrderID:   position.ClientId,

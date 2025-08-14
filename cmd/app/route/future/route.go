@@ -68,15 +68,16 @@ func FutureRoute(
 		trade,
 		lookUp,
 		botOnRunStore,
+		config.BOTId,
 	)
 
 	handler_timeframe_exe_interval := handler.NewBotTimeframeExeIntervalHandler(
 		process,
 	)
-	path1 := "/timeframe-exe-interval"
-	app.POST(path1, handler_timeframe_exe_interval.HandleBot)
-	app.POST(path1+"/set", handler_timeframe_exe_interval.HandlerSetBotTimeframeExeInterval)
-	app.POST(path1+"/get", handler_timeframe_exe_interval.HandlerGetBotTimeframeExeInterval)
+	pathTimeframeExeInterval := "/timeframe-exe-interval"
+	app.POST(pathTimeframeExeInterval, handler_timeframe_exe_interval.HandleBot)
+	app.POST(pathTimeframeExeInterval+"/set", handler_timeframe_exe_interval.HandlerSetBotTimeframeExeInterval)
+	app.GET(pathTimeframeExeInterval+"/get-all", handler_timeframe_exe_interval.HandlerGetBotTimeframeExeInterval)
 
 	invalidateBotHandler := handler.NewInvalidateBotHandler(
 		process,

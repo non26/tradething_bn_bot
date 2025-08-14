@@ -17,7 +17,7 @@ func (b *botService) SetBotTimeframeExeInterval(ctx context.Context, req *domain
 	}
 	// case when lookUpResult is nil
 
-	err = b.store.Upsert(ctx, req.ToPosition())
+	err = b.store.Upsert(ctx, req.ToSetPosition())
 	if err != nil {
 		return nil, err
 	}

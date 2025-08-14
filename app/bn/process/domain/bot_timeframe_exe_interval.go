@@ -12,12 +12,14 @@ type BotTimeframeExeIntervalRequest struct {
 	botOrderID   string
 	symbol       string
 	positionSide string
-	timeframe    string
-	interval     string
-	amountB      string
+	// timeframe    string
+	// interval     string
+	amountB string
 	// startDate    time.Time
 	// endDate      time.Time
 	accountId string
+	delayTime *int
+	isActive  *bool
 }
 
 func (b *BotTimeframeExeIntervalRequest) SetBotId(botId string) {
@@ -50,6 +52,19 @@ func (b *BotTimeframeExeIntervalRequest) SetAmountB(amountB string) {
 
 func (b *BotTimeframeExeIntervalRequest) SetAccountId(accountId string) {
 	b.accountId = accountId
+}
+
+func (b *BotTimeframeExeIntervalRequest) SetDelayTime(delayTime *int) {
+	b.delayTime = delayTime
+}
+
+func (b *BotTimeframeExeIntervalRequest) SetIsActive(isActive *bool) {
+	if isActive == nil {
+		_false := false
+		b.isActive = &_false
+	} else {
+		b.isActive = isActive
+	}
 }
 
 // func (b *BotTimeframeExeIntervalRequest) SetStartDate(startDate string) error {
@@ -110,6 +125,14 @@ func (b *BotTimeframeExeIntervalRequest) GetPositionSide() string {
 	return b.positionSide
 }
 
+func (b *BotTimeframeExeIntervalRequest) GetDelayTime() *int {
+	return b.delayTime
+}
+
+func (b *BotTimeframeExeIntervalRequest) GetIsActive() *bool {
+	return b.isActive
+}
+
 // func (b *BotTimeframeExeIntervalRequest) GetTimeframe() string {
 // 	return b.timeframe
 // }
@@ -148,6 +171,18 @@ func (b *BotTimeframeExeIntervalRequest) ToPosition() *position.Position {
 		AmountB:      b.amountB,
 		ClientId:     b.botOrderID,
 		IsActive:     true,
+		AccountId:    b.accountId,
+	}
+}
+
+func (b *BotTimeframeExeIntervalRequest) ToSetPosition() *position.Position {
+	return &position.Position{
+		BotID:        b.botId,
+		Symbol:       b.symbol,
+		PositionSide: b.positionSide,
+		AmountB:      b.amountB,
+		ClientId:     b.botOrderID,
+		IsActive:     *b.GetIsActive(),
 		AccountId:    b.accountId,
 	}
 }

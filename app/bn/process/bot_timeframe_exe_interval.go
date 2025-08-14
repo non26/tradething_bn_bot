@@ -11,6 +11,7 @@ func (b *botService) BotTimeframeExeInterval(ctx context.Context, req *domain.Bo
 
 	// InTime := req.IsPresentInTimeframe()
 	InTime := true
+	// botId := b.config.TimeFrameExeIntervalId
 
 	lookUpResult, err := b.lookUp.LookUp(ctx, req.ToPosition())
 	if err != nil {

@@ -5,6 +5,7 @@ type AppConfig struct {
 	Port             string        `mapstructure:"port" json:"port"`
 	BinanceFutureUrl BinanceFuture `mapstructure:"binance-future" json:"binance-future"`
 	Dynamodb         Dynamodb      `mapstructure:"dynamodb" json:"dynamodb"`
+	BOTId            BOTId         `mapstructure:"bot-id" json:"bot-id"`
 }
 
 type Dynamodb struct {
@@ -21,4 +22,8 @@ type BinanceFuture struct {
 	QueryOrder    string `mapstructure:"query-order" json:"query-order"`
 	ExchangeInfo  string `mapstructure:"exchange-info" json:"exchange-info"`
 	BaseUrl       string `mapstructure:"baseUrl" json:"baseUrl"`
+}
+
+type BOTId struct {
+	TimeFrameExeIntervalId string `mapstructure:"time-frame-exe-interval-id" json:"time-frame-exe-interval-id"`
 }

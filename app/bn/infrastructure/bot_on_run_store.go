@@ -38,6 +38,8 @@ func (s *botOnRunStore) GetAll(ctx context.Context) ([]*position.Position, error
 			AmountB:      botOnRun.AmountB,
 			ClientId:     botOnRun.BotOrderID,
 			IsActive:     botOnRun.IsActive,
+			AccountId:    botOnRun.AccountId,
+			Setting:      []byte(botOnRun.Setting),
 		}
 		positions = append(positions, &_position)
 	}

@@ -14,7 +14,7 @@ type IBotService interface {
 	SetBotTimeframeExeInterval(ctx context.Context, req *domain.BotTimeframeExeIntervalRequest) (*res.BotTimeframeExeIntervalDetailResponse, error)
 	GetBotTimeframeExeInterval(ctx context.Context) ([]res.BotTimeframeExeIntervalDetailResponse, error)
 	ActivateBot(ctx context.Context, req *domain.Activation) *res.ActivationResponse
-	DeactivateBot(ctx context.Context, req []domain.Activation) ([]res.ActivationResponse, error)
+	DeactivateBot(ctx context.Context, req *domain.Activation) *res.ActivationResponse
 	DelayBot(ctx context.Context, req *domain.BotTimeframeExeIntervalRequest) error
 }
 

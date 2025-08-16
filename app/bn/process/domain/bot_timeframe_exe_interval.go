@@ -175,7 +175,7 @@ func (b *BotTimeframeExeIntervalRequest) ToPosition() *position.Position {
 	}
 }
 
-func (b *BotTimeframeExeIntervalRequest) ToSetPosition() *position.Position {
+func (b *BotTimeframeExeIntervalRequest) ToBotRegistorStore() *position.Position {
 	return &position.Position{
 		BotID:        b.botId,
 		Symbol:       b.symbol,

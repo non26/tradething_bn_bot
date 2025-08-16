@@ -19,22 +19,25 @@ type IBotService interface {
 }
 
 type botService struct {
-	trade  infrastructure.ITrade
-	lookUp infrastructure.IBotLookUp
-	store  infrastructure.IBotOnRunStore
-	config config.BOTId
+	trade            infrastructure.ITrade
+	lookUp           infrastructure.IBotLookUp
+	storeBotOnRun    infrastructure.IBotOnRunStore
+	storeBotRegistor infrastructure.IBotRegistorStore
+	config           config.BOTId
 }
 
 func NewBotService(
 	trade infrastructure.ITrade,
 	lookUp infrastructure.IBotLookUp,
-	store infrastructure.IBotOnRunStore,
+	storeBotOnRun infrastructure.IBotOnRunStore,
+	storeBotRegistor infrastructure.IBotRegistorStore,
 	config config.BOTId,
 ) IBotService {
 	return &botService{
-		trade:  trade,
-		lookUp: lookUp,
-		store:  store,
-		config: config,
+		trade:            trade,
+		lookUp:           lookUp,
+		storeBotOnRun:    storeBotOnRun,
+		storeBotRegistor: storeBotRegistor,
+		config:           config,
 	}
 }

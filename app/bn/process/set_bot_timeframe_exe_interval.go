@@ -12,12 +12,11 @@ func (b *botService) SetBotTimeframeExeInterval(ctx context.Context, req *domain
 	if err != nil {
 		return nil, err
 	}
-	if lookUpResult != nil {
+	if lookUpResult.IsRegistor() {
 		return nil, errors.New("bot order already create")
 	}
-	// case when lookUpResult is nil
 
-	err = b.store.Upsert(ctx, req.ToSetPosition())
+	err = b.storeBotRegistor.Upsert(ctx, req.ToBotRegistorStore())
 	if err != nil {
 		return nil, err
 	}

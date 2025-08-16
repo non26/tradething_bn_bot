@@ -23,7 +23,7 @@ func (b *botService) DeactivateBot(ctx context.Context, req []domain.Activation)
 			responses = append(responses, response)
 			continue
 		}
-		bot, err := b.store.Get(ctx, deactivation.ToPosition())
+		bot, err := b.storeBotOnRun.Get(ctx, deactivation.ToPosition())
 		if err != nil {
 			response.SetFailed(err.Error())
 			responses = append(responses, response)
@@ -54,7 +54,7 @@ func (b *botService) DeactivateBot(ctx context.Context, req []domain.Activation)
 			AccountId:    bot.AccountId,
 		}
 
-		err = b.store.Upsert(ctx, deactivatePosition)
+		err = b.storeBotOnRun.Upsert(ctx, deactivatePosition)
 		if err != nil {
 			response.SetFailed(err.Error())
 			responses = append(responses, response)

@@ -30,6 +30,7 @@ func main() {
 	bnFtHistoryTable := bndynamodb.NewConnectionBnFtHistoryRepository(dynamodbclient)
 	bnFtBotTable := bndynamodb.NewConnectionBnFtBotRepository(dynamodbclient)
 	bnFtBotOnRunTable := bndynamodb.NewConnectionBnFtBotOnRunRepository(dynamodbclient)
+	bnFtBotRegistorTable := bndynamodb.NewConnectionBnFtBotRegistorRepository(dynamodbclient)
 
 	httptransport := bntransport.NewBinanceTransport(&http.Transport{})
 	httpclient := bnclient.NewBinanceSerivceHttpClient()
@@ -43,6 +44,7 @@ func main() {
 		bnFtCryptoTable,
 		bnFtBotTable,
 		bnFtBotOnRunTable,
+		bnFtBotRegistorTable,
 		httptransport,
 		httpclient,
 	)

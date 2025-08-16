@@ -24,4 +24,20 @@ type IBotOnRunStore interface {
 	Upsert(ctx context.Context, position *position.Position) error
 	GetAll(ctx context.Context) ([]*position.Position, error)
 	Get(ctx context.Context, position *position.Position) (*position.Position, error)
+	Delete(ctx context.Context, position *position.Position) error
+}
+
+type IBotRegistorStore interface {
+	Upsert(ctx context.Context, position *position.Position) error
+	Get(ctx context.Context, position *position.Position) (*position.Position, error)
+	GetAll(ctx context.Context) ([]*position.Position, error)
+}
+
+type IBnFutureHistoryStore interface {
+	Get(ctx context.Context, position *position.Position) (*position.Position, error)
+	Insert(ctx context.Context, position *position.Position) error
+}
+
+type IBotStore interface {
+	Get(ctx context.Context, botId string) (*position.Position, error)
 }

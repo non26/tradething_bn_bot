@@ -25,9 +25,26 @@ func FutureRoute(
 	bnFtCryptoTable bndynamodb.IBnFtCryptoRepository,
 	botTable bndynamodb.IBnFtBotRepository,
 	botOnRunTable bndynamodb.IBnFtBotOnRunRepository,
+	botRegistor bndynamodb.IBnFtBotRegistorRepository,
 	httpttransport bntransport.IBinanceServiceHttpTransport,
 	httpclient bnclient.IBinanceSerivceHttpClient,
 ) {
+
+	botOnRunStore := infrastore.NewBotOnRunStore(
+		botOnRunTable,
+	)
+
+	botRegistorStore := infrastore.NewBotRegistorStore(
+		botRegistor,
+	)
+
+	botStore := infrastore.NewBotStore(
+		botTable,
+	)
+
+	historyStore := infrastore.NewBnFutureHistoryStore(
+		historyTable,
+	)
 
 	adaptorTradeOrder := adaptor.NewOrderAdaptor(
 		config.BinanceFutureUrl.BaseUrl,
@@ -59,19 +76,17 @@ func FutureRoute(
 	)
 
 	lookUp := infralookup.NewBotLookUp(
-		botTable,
-		historyTable,
-		botOnRunTable,
-	)
-
-	botOnRunStore := infrastore.NewBotOnRunStore(
-		botOnRunTable,
+		botStore,
+		historyStore,
+		botOnRunStore,
+		botRegistorStore,
 	)
 
 	process := process.NewBotService(
 		trade,
 		lookUp,
 		botOnRunStore,
+		botRegistorStore,
 		config.BOTId,
 	)
 

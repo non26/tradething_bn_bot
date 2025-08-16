@@ -11,6 +11,7 @@ type ILookUpResult interface {
 	SetNewIsFirstTime(new bool) bool
 	GetPositionSide() string
 	GetSymbol() string
+	IsRegistor() bool
 }
 
 type lookUpResult struct {
@@ -23,9 +24,10 @@ type lookUpResult struct {
 	accountId     string
 	setting       string
 	is_first_time bool
+	is_registor   bool
 }
 
-func NewLookUpResult(botId string, botOrderID string, positionSide string, amountB string, symbol string, accountId string, setting string, is_active bool) ILookUpResult {
+func NewLookUpResult(botId string, botOrderID string, positionSide string, amountB string, symbol string, accountId string, setting string, is_active bool, is_registor bool) ILookUpResult {
 	return &lookUpResult{
 		botId:         botId,
 		botOrderID:    botOrderID,
@@ -36,10 +38,11 @@ func NewLookUpResult(botId string, botOrderID string, positionSide string, amoun
 		setting:       setting,
 		is_active:     is_active,
 		is_first_time: false,
+		is_registor:   true,
 	}
 }
 
-func NewLookUpResultFirstTime(botId string, botOrderID string, positionSide string, amountB string, symbol string, accountId string, setting string, is_active bool) ILookUpResult {
+func NewLookUpResultFirstTime(botId string, botOrderID string, positionSide string, amountB string, symbol string, accountId string, setting string, is_active bool, is_registor bool) ILookUpResult {
 	return &lookUpResult{
 		botId:         botId,
 		botOrderID:    botOrderID,
@@ -50,8 +53,16 @@ func NewLookUpResultFirstTime(botId string, botOrderID string, positionSide stri
 		setting:       setting,
 		is_active:     is_active,
 		is_first_time: true,
+		is_registor:   false,
 	}
 }
+
+func NewLookUpResultRegistor(is_registor bool) ILookUpResult {
+	return &lookUpResult{
+		is_registor: is_registor,
+	}
+}
+
 func (l *lookUpResult) ValidateBotOrderIDWith(reqBotOrderID string) error {
 	if l.botOrderID != reqBotOrderID {
 		return errors.New("bot order id not match")
@@ -101,4 +112,8 @@ func (l *lookUpResult) GetAccountId() string {
 
 func (l *lookUpResult) GetSetting() string {
 	return l.setting
+}
+
+func (l *lookUpResult) IsRegistor() bool {
+	return l.is_registor
 }

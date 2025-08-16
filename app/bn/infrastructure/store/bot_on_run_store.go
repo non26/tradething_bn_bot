@@ -33,14 +33,8 @@ func (s *botOnRunStore) GetAll(ctx context.Context) ([]*position.Position, error
 	positions := make([]*position.Position, len(botOnRuns))
 	for _, botOnRun := range botOnRuns {
 		_position := position.Position{
-			BotID:        botOnRun.BotID,
-			Symbol:       botOnRun.Symbol,
-			PositionSide: botOnRun.PositionSide,
-			AmountB:      botOnRun.AmountB,
-			ClientId:     botOnRun.BotOrderID,
-			IsActive:     botOnRun.IsActive,
-			AccountId:    botOnRun.AccountId,
-			Setting:      []byte(botOnRun.Setting),
+			BotID:    botOnRun.BotID,
+			ClientId: botOnRun.BotOrderID,
 		}
 		positions = append(positions, &_position)
 	}
@@ -53,14 +47,15 @@ func (s *botOnRunStore) Get(ctx context.Context, _position *position.Position) (
 	if err != nil {
 		return nil, err
 	}
-	return &position.Position{
-		BotID:        botOnRun.BotID,
-		Symbol:       botOnRun.Symbol,
-		PositionSide: botOnRun.PositionSide,
-		AmountB:      botOnRun.AmountB,
-		ClientId:     botOnRun.BotOrderID,
-		IsActive:     botOnRun.IsActive,
-		AccountId:    botOnRun.AccountId,
-		Setting:      []byte(botOnRun.Setting),
-	}, nil
+
+	res := &position.Position{
+		BotID:    botOnRun.BotID,
+		ClientId: botOnRun.BotOrderID,
+	}
+	res.IsFoundBotOnRunning = botOnRun.IsFound()
+	return res, nil
+}
+
+func (s *botOnRunStore) Delete(ctx context.Context, position *position.Position) error {
+	return s.botOnRunTable.Delete(ctx, position.ToBnFtBotOnRunTable())
 }

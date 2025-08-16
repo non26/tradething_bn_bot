@@ -6,25 +6,26 @@ import (
 	"tradethingbot/app/bn/infrastructure"
 	"tradethingbot/app/bn/infrastructure/position"
 	domainservice "tradethingbot/app/bn/process/domain_service"
-
-	bndynamodb "github.com/non26/tradepkg/pkg/bn/dynamodb_future"
 )
 
 type botLookUp struct {
-	botTable      bndynamodb.IBnFtBotRepository
-	historyTable  bndynamodb.IBnFtHistoryRepository
-	botOnRunTable bndynamodb.IBnFtBotOnRunRepository
+	botTable      infrastructure.IBotStore
+	historyTable  infrastructure.IBnFutureHistoryStore
+	botOnRunTable infrastructure.IBotOnRunStore
+	botRegistor   infrastructure.IBotRegistorStore
 }
 
 func NewBotLookUp(
-	botTable bndynamodb.IBnFtBotRepository,
-	historyTable bndynamodb.IBnFtHistoryRepository,
-	botOnRunTable bndynamodb.IBnFtBotOnRunRepository,
+	botTable infrastructure.IBotStore,
+	historyTable infrastructure.IBnFutureHistoryStore,
+	botOnRunTable infrastructure.IBotOnRunStore,
+	botRegistor infrastructure.IBotRegistorStore,
 ) infrastructure.IBotLookUp {
 	return &botLookUp{
 		botTable:      botTable,
 		historyTable:  historyTable,
 		botOnRunTable: botOnRunTable,
+		botRegistor:   botRegistor,
 	}
 }
 
@@ -34,46 +35,57 @@ func (b *botLookUp) LookUp(ctx context.Context, position *position.Position) (re
 	if err != nil {
 		return nil, err
 	}
-	if !bot.IsFound() {
+	if !bot.IsFoundBotID {
 		return nil, errors.New("bot not found")
 	}
 
-	posHistory, err := b.historyTable.Get(ctx, position.ClientId)
+	positionHistory, err := b.historyTable.Get(ctx, position)
 	if err != nil {
 		return nil, err
 	}
-	if posHistory.IsFound() {
+	if positionHistory.IsFoundInHistory {
 		return nil, errors.New("bot order already closed")
 	}
 
-	current_position, err := b.botOnRunTable.Get(ctx, position.ToBnFtBotOnRunTable())
+	botRegistor, err := b.botRegistor.Get(ctx, position)
 	if err != nil {
 		return nil, err
 	}
-	if current_position == nil {
-		return nil, nil
+
+	if !botRegistor.IsFoundBotRegistor {
+		return domainservice.NewLookUpResultRegistor(
+			false,
+		), nil
 	}
-	if current_position.IsFound() {
+
+	botOnRun, err := b.botOnRunTable.Get(ctx, position)
+	if err != nil {
+		return nil, err
+	}
+
+	if botOnRun.IsFoundBotOnRunning {
 		return domainservice.NewLookUpResult(
-			current_position.BotID,
-			current_position.BotOrderID,
-			current_position.PositionSide,
-			current_position.AmountB,
-			current_position.Symbol,
-			current_position.AccountId,
-			current_position.Setting,
-			current_position.IsActive,
+			botOnRun.BotID,
+			botOnRun.ClientId,
+			botRegistor.PositionSide,
+			botRegistor.AmountB,
+			botRegistor.Symbol,
+			botRegistor.AccountId,
+			string(botRegistor.Setting),
+			botRegistor.IsActive,
+			botRegistor.IsFoundBotRegistor,
 		), nil
 	}
 
 	return domainservice.NewLookUpResultFirstTime(
-		current_position.BotID,
-		current_position.BotOrderID,
-		current_position.PositionSide,
-		current_position.AmountB,
-		current_position.Symbol,
-		current_position.AccountId,
-		current_position.Setting,
-		current_position.IsActive,
+		botOnRun.BotID,
+		botOnRun.ClientId,
+		botRegistor.PositionSide,
+		botRegistor.AmountB,
+		botRegistor.Symbol,
+		botRegistor.AccountId,
+		string(botRegistor.Setting),
+		botRegistor.IsActive,
+		botRegistor.IsFoundBotRegistor,
 	), nil
 }

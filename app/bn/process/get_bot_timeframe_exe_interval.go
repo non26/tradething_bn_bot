@@ -6,7 +6,7 @@ import (
 )
 
 func (b *botService) GetBotTimeframeExeInterval(ctx context.Context) ([]res.BotTimeframeExeIntervalDetailResponse, error) {
-	positions, err := b.store.GetAll(ctx)
+	positions, err := b.storeBotRegistor.GetAll(ctx)
 	if err != nil {
 		return nil, err
 	}

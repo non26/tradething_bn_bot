@@ -16,6 +16,7 @@ type Dynamodb struct {
 }
 
 type BinanceFuture struct {
+	DelayTime     int    `mapstructure:"delay-time" json:"delay-time"`
 	SetLeverage   string `mapstructure:"set-leverage" json:"set-leverage"`
 	SingleOrder   string `mapstructure:"single-order" json:"single-order"`
 	MultipleOrder string `mapstructure:"miltiple-order" json:"miltiple-order"`

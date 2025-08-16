@@ -85,16 +85,16 @@ func FutureRoute(
 		lookUp,
 		botOnRunStore,
 		botRegistorStore,
-		config.BOTId,
 	)
 
 	handler_timeframe_exe_interval := handlerbottimeframeexeinterval.NewBotTimeframeExeIntervalHandler(
 		process,
+		config.BinanceFutureUrl.DelayTime,
 	)
 	pathTimeframeExeInterval := "/timeframe-exe-interval"
-	app.POST(pathTimeframeExeInterval, handler_timeframe_exe_interval.HandleBot)
-	app.POST(pathTimeframeExeInterval+"/set", handler_timeframe_exe_interval.HandlerSetBotTimeframeExeInterval)
-	app.GET(pathTimeframeExeInterval+"/get-all", handler_timeframe_exe_interval.HandlerGetBotTimeframeExeInterval)
+	app.POST(pathTimeframeExeInterval, handler_timeframe_exe_interval.ExecuteHandler)
+	app.POST(pathTimeframeExeInterval+"/set", handler_timeframe_exe_interval.SetHandler)
+	app.GET(pathTimeframeExeInterval+"/get-all", handler_timeframe_exe_interval.GetHandler)
 
 	invalidateBotHandler := handler.NewInvalidateBotHandler(
 		process,

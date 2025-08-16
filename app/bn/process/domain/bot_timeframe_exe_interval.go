@@ -18,8 +18,7 @@ type BotTimeframeExeIntervalRequest struct {
 	// startDate    time.Time
 	// endDate      time.Time
 	accountId string
-	delayTime *int
-	isActive  *bool
+	isActive  bool
 }
 
 func (b *BotTimeframeExeIntervalRequest) SetBotId(botId string) {
@@ -54,17 +53,8 @@ func (b *BotTimeframeExeIntervalRequest) SetAccountId(accountId string) {
 	b.accountId = accountId
 }
 
-func (b *BotTimeframeExeIntervalRequest) SetDelayTime(delayTime *int) {
-	b.delayTime = delayTime
-}
-
-func (b *BotTimeframeExeIntervalRequest) SetIsActive(isActive *bool) {
-	if isActive == nil {
-		_false := false
-		b.isActive = &_false
-	} else {
-		b.isActive = isActive
-	}
+func (b *BotTimeframeExeIntervalRequest) SetIsActive(isActive bool) {
+	b.isActive = isActive
 }
 
 // func (b *BotTimeframeExeIntervalRequest) SetStartDate(startDate string) error {
@@ -125,11 +115,7 @@ func (b *BotTimeframeExeIntervalRequest) GetPositionSide() string {
 	return b.positionSide
 }
 
-func (b *BotTimeframeExeIntervalRequest) GetDelayTime() *int {
-	return b.delayTime
-}
-
-func (b *BotTimeframeExeIntervalRequest) GetIsActive() *bool {
+func (b *BotTimeframeExeIntervalRequest) GetIsActive() bool {
 	return b.isActive
 }
 
@@ -182,7 +168,7 @@ func (b *BotTimeframeExeIntervalRequest) ToBotRegistorStore() *infrastructure.Po
 		PositionSide: b.positionSide,
 		AmountB:      b.amountB,
 		ClientId:     b.botOrderID,
-		IsActive:     *b.GetIsActive(),
+		IsActive:     b.GetIsActive(),
 		AccountId:    b.accountId,
 	}
 }

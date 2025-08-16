@@ -55,6 +55,7 @@ func (b *botService) DeactivateBot(ctx context.Context, req *domain.Activation) 
 		Symbol:       bot.Symbol,
 		PositionSide: bot.PositionSide,
 		AccountId:    bot.AccountId,
+		Setting:      bot.Setting,
 	}
 
 	err = b.storeBotRegistor.Upsert(ctx, deactivatePosition)

@@ -1,11 +1,11 @@
-package process
+package bottimeframeexeinterval
 
 import (
 	"context"
 	"tradethingbot/app/bn/handler/res"
 )
 
-func (b *botService) GetBotTimeframeExeInterval(ctx context.Context) ([]res.BotTimeframeExeIntervalDetailResponse, error) {
+func (b *botTimeframeExeInterval) Get(ctx context.Context) ([]res.BotTimeframeExeIntervalDetailResponse, error) {
 	positions, err := b.storeBotRegistor.GetAll(ctx)
 	if err != nil {
 		return nil, err

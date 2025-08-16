@@ -1,4 +1,4 @@
-package process
+package bottimeframeexeinterval
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	"tradethingbot/app/bn/process/domain"
 )
 
-func (b *botService) SetBotTimeframeExeInterval(ctx context.Context, req *domain.BotTimeframeExeIntervalRequest) (*res.BotTimeframeExeIntervalDetailResponse, error) {
+func (b *botTimeframeExeInterval) Set(ctx context.Context, req *domain.BotTimeframeExeIntervalRequest) (*res.BotTimeframeExeIntervalDetailResponse, error) {
 	lookUpResult, err := b.lookUp.LookUp(ctx, req.ToPosition())
 	if err != nil {
 		return nil, err

@@ -4,7 +4,6 @@ type BotRequestAspect struct {
 	ActivateBotRequest   ActivateBotRequest
 	DeactivateBotRequest DeactivateBotRequest
 	InvalidateBotRequest InvalidateBotRequest
-	DelayBotRequest      DelayBotRequest
 }
 
 type ActivateBotRequest struct {
@@ -17,8 +16,4 @@ type DeactivateBotRequest struct {
 
 type InvalidateBotRequest struct {
 	ClientIds []string `json:"clientIds"`
-}
-
-type DelayBotRequest struct {
-	DelayTime *int `json:"delayTime"`
 }

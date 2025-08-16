@@ -1,4 +1,4 @@
-package process
+package bottimeframeexeinterval
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	"tradethingbot/app/bn/process/domain"
 )
 
-func (b *botService) BotTimeframeExeInterval(ctx context.Context, req *domain.BotTimeframeExeIntervalRequest) (*res.BotTimeframeExeIntervalResponse, error) {
+func (b *botTimeframeExeInterval) Execute(ctx context.Context, req *domain.BotTimeframeExeIntervalRequest) (*res.BotTimeframeExeIntervalResponse, error) {
 
 	// InTime := req.IsPresentInTimeframe()
 	InTime := true
@@ -24,6 +24,10 @@ func (b *botService) BotTimeframeExeInterval(ctx context.Context, req *domain.Bo
 	if !lookUpResult.IsCurrentBotActive() {
 		return nil, errors.New("current bot is not active")
 	}
+
+	req.SetSymbol(lookUpResult.GetSymbol())
+	req.SetAccountId(lookUpResult.GetAccountId())
+	req.SetIsActive(lookUpResult.IsCurrentBotActive())
 
 	if !lookUpResult.IsFirstTime() {
 		err = lookUpResult.ValidateBotOrderIDWith(req.GetBotOrderID())

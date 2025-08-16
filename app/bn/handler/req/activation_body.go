@@ -7,17 +7,13 @@ type ActivationRequest struct {
 	BotOrderId string `json:"botOrderId"`
 }
 
-type ActivationRequestList struct {
-	ActivationRequest []ActivationRequest `json:"activationRequest"`
+func (r *ActivationRequest) ToDomain() *domain.Activation {
+	return &domain.Activation{
+		BotId:      r.BotId,
+		BotOrderId: r.BotOrderId,
+	}
 }
 
-func (r *ActivationRequestList) ToDomain() []domain.Activation {
-	domains := make([]domain.Activation, len(r.ActivationRequest))
-	for i, request := range r.ActivationRequest {
-		domains[i] = domain.Activation{
-			BotId:      request.BotId,
-			BotOrderId: request.BotOrderId,
-		}
-	}
-	return domains
+type ActivationRequestList struct {
+	ActivationRequest []ActivationRequest `json:"activationRequest"`
 }

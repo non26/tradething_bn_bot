@@ -22,7 +22,12 @@ func (b *botService) ActivateBot(ctx context.Context, req *domain.Activation) *r
 		return response
 	}
 
-	bot, err := b.storeBotOnRun.Get(ctx, req.ToPosition())
+	if !lookUpResult.IsRegistor() {
+		response.SetFailed("bot registor not found")
+		return response
+	}
+
+	bot, err := b.storeBotRegistor.Get(ctx, req.ToPosition())
 	if err != nil {
 		response.SetFailed(err.Error())
 		return response
@@ -38,25 +43,12 @@ func (b *botService) ActivateBot(ctx context.Context, req *domain.Activation) *r
 		AccountId:    bot.AccountId,
 	}
 
-	err = b.storeBotOnRun.Upsert(ctx, activatePosition)
+	err = b.storeBotRegistor.Upsert(ctx, activatePosition)
 	if err != nil {
 		response.SetFailed(err.Error())
 		return response
 	}
 
-	tfIntervalRequest := &domain.BotTimeframeExeIntervalRequest{}
-	tfIntervalRequest.SetBotId(bot.BotID)
-	tfIntervalRequest.SetBotOrderID(bot.ClientId)
-	tfIntervalRequest.SetSymbol(bot.Symbol)
-	tfIntervalRequest.SetPositionSide(bot.PositionSide)
-	tfIntervalRequest.SetAmountB(bot.AmountB)
-	tfIntervalRequest.SetAccountId(bot.AccountId)
-	_, err = b.BotTimeframeExeInterval(ctx, tfIntervalRequest)
-	if err != nil {
-		response.SetFailed(err.Error())
-		return response
-	}
 	response.SetSuccess()
-
 	return response
 }

@@ -40,7 +40,7 @@ func NewLookUpResult(botId string, botOrderID string, positionSide string, amoun
 		setting:       setting,
 		is_active:     is_active,
 		is_first_time: false,
-		is_registor:   true,
+		is_registor:   is_registor,
 	}
 }
 
@@ -55,7 +55,7 @@ func NewLookUpResultFirstTime(botId string, botOrderID string, positionSide stri
 		setting:       setting,
 		is_active:     is_active,
 		is_first_time: true,
-		is_registor:   false,
+		is_registor:   is_registor,
 	}
 }
 

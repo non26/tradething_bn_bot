@@ -5,13 +5,15 @@ import "errors"
 type ILookUpResult interface {
 	ValidateBotOrderIDWith(reqBotOrderID string) error
 	ValiddatePositionSideWith(reqBotPositionSide string) error
-	GetAmountB() string
+	ValidateAmountQuantityWith(reqAmountQuantity string) error
 	IsCurrentBotActive() bool
 	IsFirstTime() bool
-	SetNewIsFirstTime(new bool) bool
+	IsRegistor() bool
 	GetPositionSide() string
 	GetSymbol() string
-	IsRegistor() bool
+	GetAmountB() string
+	GetAccountId() string
+	SetNewIsFirstTime(new bool) bool
 }
 
 type lookUpResult struct {
@@ -73,6 +75,13 @@ func (l *lookUpResult) ValidateBotOrderIDWith(reqBotOrderID string) error {
 func (l *lookUpResult) ValiddatePositionSideWith(reqBotPositionSide string) error {
 	if l.positionSide != reqBotPositionSide {
 		return errors.New("position side not match")
+	}
+	return nil
+}
+
+func (l *lookUpResult) ValidateAmountQuantityWith(reqAmountQuantity string) error {
+	if l.amountB != reqAmountQuantity {
+		return errors.New("amount quantity not match")
 	}
 	return nil
 }

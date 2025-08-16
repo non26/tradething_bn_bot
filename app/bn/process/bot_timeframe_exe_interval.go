@@ -11,7 +11,6 @@ func (b *botService) BotTimeframeExeInterval(ctx context.Context, req *domain.Bo
 
 	// InTime := req.IsPresentInTimeframe()
 	InTime := true
-	// botId := b.config.TimeFrameExeIntervalId
 
 	lookUpResult, err := b.lookUp.LookUp(ctx, req.ToPosition())
 	if err != nil {
@@ -19,7 +18,11 @@ func (b *botService) BotTimeframeExeInterval(ctx context.Context, req *domain.Bo
 	}
 
 	if lookUpResult == nil {
-		return nil, errors.New("bot order not found")
+		return nil, errors.New("look up result not found")
+	}
+
+	if !lookUpResult.IsCurrentBotActive() {
+		return nil, errors.New("current bot is not active")
 	}
 
 	if !lookUpResult.IsFirstTime() {
@@ -28,30 +31,42 @@ func (b *botService) BotTimeframeExeInterval(ctx context.Context, req *domain.Bo
 			return nil, err
 		}
 
+		isPositionSideChanged := false
 		err = lookUpResult.ValiddatePositionSideWith(req.GetPositionSide())
 		if err != nil {
-			// return nil, err
-			closePosition := domain.BotTimeframeExeIntervalRequest{}
-			closePosition.SetAccountId(req.GetAccountId())
-			closePosition.SetBotId(req.GetBotId())
-			closePosition.SetBotOrderID(req.GetBotOrderID())
-			closePosition.SetSymbol(req.GetSymbol())
-			closePosition.SetPositionSide(lookUpResult.GetPositionSide())
-			closePosition.SetAmountB(lookUpResult.GetAmountB())
-			err = b.trade.PlacePosition(ctx, closePosition.ToClosePosition())
+			isPositionSideChanged = true
+		}
+
+		isQuantityChanged := false
+		err = lookUpResult.ValidateAmountQuantityWith(req.GetAmountB())
+		if err != nil {
+			isQuantityChanged = true
+		}
+
+		if isPositionSideChanged || isQuantityChanged {
+			oldPosition := domain.BotTimeframeExeIntervalRequest{}
+			oldPosition.SetAccountId(req.GetAccountId())
+			oldPosition.SetBotId(req.GetBotId())
+			oldPosition.SetBotOrderID(req.GetBotOrderID())
+			oldPosition.SetSymbol(req.GetSymbol())
+			oldPosition.SetPositionSide(lookUpResult.GetPositionSide())
+			oldPosition.SetAmountB(lookUpResult.GetAmountB())
+
+			err = b.trade.PlacePosition(ctx, oldPosition.ToClosePosition())
 			if err != nil {
 				return nil, err
 			}
+
 			lookUpResult.SetNewIsFirstTime(true)
+			err = b.storeBotRegistor.Upsert(ctx, req.ToPosition())
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 
 	if InTime {
 		if !lookUpResult.IsFirstTime() {
-			if !lookUpResult.IsCurrentBotActive() {
-				return nil, errors.New("current bot is not active")
-			}
-
 			err = b.trade.PlacePosition(ctx, req.ToClosePosition())
 			if err != nil {
 				return nil, err

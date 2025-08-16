@@ -3,7 +3,6 @@ package infrastructure
 import (
 	"context"
 	"tradethingbot/app/bn/infrastructure"
-	"tradethingbot/app/bn/infrastructure/position"
 
 	bndynamodb "github.com/non26/tradepkg/pkg/bn/dynamodb_future"
 )
@@ -20,16 +19,16 @@ func NewBotRegistorStore(
 	}
 }
 
-func (s *botRegistorStore) Upsert(ctx context.Context, _position *position.Position) error {
+func (s *botRegistorStore) Upsert(ctx context.Context, _position *infrastructure.Position) error {
 	return s.botRegistorTable.Upsert(ctx, _position.ToBnFtBotRegistorTable())
 }
 
-func (s *botRegistorStore) Get(ctx context.Context, _position *position.Position) (*position.Position, error) {
+func (s *botRegistorStore) Get(ctx context.Context, _position *infrastructure.Position) (*infrastructure.Position, error) {
 	botRegistor, err := s.botRegistorTable.Get(ctx, _position.BotID, _position.ClientId)
 	if err != nil {
 		return nil, err
 	}
-	res := &position.Position{
+	res := &infrastructure.Position{
 		BotID:        botRegistor.BotID,
 		ClientId:     botRegistor.BotOrderID,
 		PositionSide: botRegistor.PositionSide,
@@ -42,14 +41,14 @@ func (s *botRegistorStore) Get(ctx context.Context, _position *position.Position
 	return res, nil
 }
 
-func (s *botRegistorStore) GetAll(ctx context.Context) ([]*position.Position, error) {
+func (s *botRegistorStore) GetAll(ctx context.Context) ([]*infrastructure.Position, error) {
 	botRegistors, err := s.botRegistorTable.GetAll(ctx)
 	if err != nil {
 		return nil, err
 	}
-	positions := make([]*position.Position, len(botRegistors))
+	positions := make([]*infrastructure.Position, len(botRegistors))
 	for i, botRegistor := range botRegistors {
-		positions[i] = &position.Position{
+		positions[i] = &infrastructure.Position{
 			BotID:        botRegistor.BotID,
 			ClientId:     botRegistor.BotOrderID,
 			PositionSide: botRegistor.PositionSide,

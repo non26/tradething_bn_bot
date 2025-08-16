@@ -4,7 +4,6 @@ import (
 	"context"
 	"tradethingbot/app/bn/infrastructure"
 	adaptor "tradethingbot/app/bn/infrastructure/adaptor/trade"
-	"tradethingbot/app/bn/infrastructure/position"
 
 	"github.com/non26/tradepkg/pkg/bn/utils"
 )
@@ -24,7 +23,7 @@ func NewTrade(
 	}
 }
 
-func (t *trade) PlacePosition(ctx context.Context, position *position.Position) error {
+func (t *trade) PlacePosition(ctx context.Context, position *infrastructure.Position) error {
 	futurePosition := t.position.GetPosition(ctx, position.PositionSide)
 	if utils.IsBuyPosition(position.Side, position.PositionSide) {
 		return futurePosition.Buy(ctx, position)
@@ -32,7 +31,7 @@ func (t *trade) PlacePosition(ctx context.Context, position *position.Position) 
 	return futurePosition.Sell(ctx, position)
 }
 
-func (t *trade) InvalidatePosition(ctx context.Context, position *position.Position) error {
+func (t *trade) InvalidatePosition(ctx context.Context, position *infrastructure.Position) error {
 	futurePosition := t.position.GetPosition(ctx, position.PositionSide)
 	return futurePosition.Invalidate(ctx, position)
 }

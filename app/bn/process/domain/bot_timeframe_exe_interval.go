@@ -1,7 +1,7 @@
 package domain
 
 import (
-	"tradethingbot/app/bn/infrastructure/position"
+	"tradethingbot/app/bn/infrastructure"
 
 	bnconstant "github.com/non26/tradepkg/pkg/bn/bn_constant"
 	"github.com/non26/tradepkg/pkg/bn/utils"
@@ -163,8 +163,8 @@ func (b *BotTimeframeExeIntervalRequest) GetCloseSide() string {
 	return bnconstant.BUY
 }
 
-func (b *BotTimeframeExeIntervalRequest) ToPosition() *position.Position {
-	return &position.Position{
+func (b *BotTimeframeExeIntervalRequest) ToPosition() *infrastructure.Position {
+	return &infrastructure.Position{
 		BotID:        b.botId,
 		Symbol:       b.symbol,
 		PositionSide: b.positionSide,
@@ -175,8 +175,8 @@ func (b *BotTimeframeExeIntervalRequest) ToPosition() *position.Position {
 	}
 }
 
-func (b *BotTimeframeExeIntervalRequest) ToBotRegistorStore() *position.Position {
-	return &position.Position{
+func (b *BotTimeframeExeIntervalRequest) ToBotRegistorStore() *infrastructure.Position {
+	return &infrastructure.Position{
 		BotID:        b.botId,
 		Symbol:       b.symbol,
 		PositionSide: b.positionSide,
@@ -187,9 +187,9 @@ func (b *BotTimeframeExeIntervalRequest) ToBotRegistorStore() *position.Position
 	}
 }
 
-func (b *BotTimeframeExeIntervalRequest) ToOpenPosition() *position.Position {
+func (b *BotTimeframeExeIntervalRequest) ToOpenPosition() *infrastructure.Position {
 	side := b.GetOpenSide()
-	return &position.Position{
+	return &infrastructure.Position{
 		BotID:        b.botId,
 		Symbol:       b.symbol,
 		PositionSide: b.positionSide,
@@ -201,9 +201,9 @@ func (b *BotTimeframeExeIntervalRequest) ToOpenPosition() *position.Position {
 	}
 }
 
-func (b *BotTimeframeExeIntervalRequest) ToClosePosition() *position.Position {
+func (b *BotTimeframeExeIntervalRequest) ToClosePosition() *infrastructure.Position {
 	side := b.GetCloseSide()
-	return &position.Position{
+	return &infrastructure.Position{
 		BotID:        b.botId,
 		Symbol:       b.symbol,
 		PositionSide: b.positionSide,

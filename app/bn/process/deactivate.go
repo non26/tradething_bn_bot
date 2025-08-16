@@ -3,7 +3,7 @@ package process
 import (
 	"context"
 	"tradethingbot/app/bn/handler/res"
-	"tradethingbot/app/bn/infrastructure/position"
+	"tradethingbot/app/bn/infrastructure"
 	"tradethingbot/app/bn/process/domain"
 )
 
@@ -44,7 +44,7 @@ func (b *botService) DeactivateBot(ctx context.Context, req []domain.Activation)
 			continue
 		}
 
-		deactivatePosition := &position.Position{
+		deactivatePosition := &infrastructure.Position{
 			BotID:        bot.BotID,
 			ClientId:     bot.ClientId,
 			IsActive:     false,

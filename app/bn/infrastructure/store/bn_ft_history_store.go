@@ -3,7 +3,6 @@ package infrastructure
 import (
 	"context"
 	"tradethingbot/app/bn/infrastructure"
-	"tradethingbot/app/bn/infrastructure/position"
 
 	bndynamodb "github.com/non26/tradepkg/pkg/bn/dynamodb_future"
 )
@@ -20,12 +19,12 @@ func NewBnFutureHistoryStore(
 	}
 }
 
-func (s *bnFtHistoryStore) Get(ctx context.Context, _position *position.Position) (*position.Position, error) {
+func (s *bnFtHistoryStore) Get(ctx context.Context, _position *infrastructure.Position) (*infrastructure.Position, error) {
 	bnFtHistory, err := s.bnFtHistoryTable.Get(ctx, _position.ClientId)
 	if err != nil {
 		return nil, err
 	}
-	res := &position.Position{
+	res := &infrastructure.Position{
 		ClientId:     bnFtHistory.ClientId,
 		PositionSide: bnFtHistory.PositionSide,
 	}
@@ -33,6 +32,6 @@ func (s *bnFtHistoryStore) Get(ctx context.Context, _position *position.Position
 	return res, nil
 }
 
-func (s *bnFtHistoryStore) Insert(ctx context.Context, position *position.Position) error {
+func (s *bnFtHistoryStore) Insert(ctx context.Context, position *infrastructure.Position) error {
 	return s.bnFtHistoryTable.Insert(ctx, position.ToBnFtHistoryTable())
 }

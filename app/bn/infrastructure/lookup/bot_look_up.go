@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"tradethingbot/app/bn/infrastructure"
-	"tradethingbot/app/bn/infrastructure/position"
 	domainservice "tradethingbot/app/bn/process/domain_service"
 )
 
@@ -29,7 +28,7 @@ func NewBotLookUp(
 	}
 }
 
-func (b *botLookUp) LookUp(ctx context.Context, position *position.Position) (result domainservice.ILookUpResult, err error) {
+func (b *botLookUp) LookUp(ctx context.Context, position *infrastructure.Position) (result domainservice.ILookUpResult, err error) {
 
 	bot, err := b.botTable.Get(ctx, position.BotID)
 	if err != nil {

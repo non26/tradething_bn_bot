@@ -2,40 +2,36 @@ package position
 
 import (
 	"context"
+	infrastructure "tradethingbot/app/bn/infrastructure"
 	adaptor "tradethingbot/app/bn/infrastructure/adaptor/trade"
-
-	bndynamodb "github.com/non26/tradepkg/pkg/bn/dynamodb_future"
 )
 
 type shortPosition struct {
-	historyTable  bndynamodb.IBnFtHistoryRepository
-	botTable      bndynamodb.IBnFtBotRepository
-	botOnRunTable bndynamodb.IBnFtBotOnRunRepository
+	historyTable  infrastructure.IBnFutureHistoryStore
+	botOnRunTable infrastructure.IBotOnRunStore
 	adaptor       adaptor.IOrderAdaptor
 }
 
 func NewShortPosition(
-	historyTable bndynamodb.IBnFtHistoryRepository,
-	botTable bndynamodb.IBnFtBotRepository,
-	botOnRunTable bndynamodb.IBnFtBotOnRunRepository,
+	historyTable infrastructure.IBnFutureHistoryStore,
+	botOnRunTable infrastructure.IBotOnRunStore,
 	adaptor adaptor.IOrderAdaptor,
-) IPosition {
+) infrastructure.IPosition {
 	return &shortPosition{
 		historyTable:  historyTable,
-		botTable:      botTable,
 		botOnRunTable: botOnRunTable,
 		adaptor:       adaptor,
 	}
 
 }
 
-func (s *shortPosition) Buy(ctx context.Context, position *Position) error {
+func (s *shortPosition) Buy(ctx context.Context, position *infrastructure.Position) error {
 	_, err := s.adaptor.NewOrder(ctx, position.ToPlacePositionModel())
 	if err != nil {
 		return err
 	}
 
-	err = s.botOnRunTable.Upsert(ctx, position.ToBnFtBotOnRunTable())
+	err = s.botOnRunTable.Upsert(ctx, position)
 	if err != nil {
 		return err
 	}
@@ -43,7 +39,7 @@ func (s *shortPosition) Buy(ctx context.Context, position *Position) error {
 	return nil
 }
 
-func (s *shortPosition) Sell(ctx context.Context, position *Position) error {
+func (s *shortPosition) Sell(ctx context.Context, position *infrastructure.Position) error {
 	_, err := s.adaptor.NewOrder(ctx, position.ToPlacePositionModel())
 	if err != nil {
 		return err
@@ -52,18 +48,18 @@ func (s *shortPosition) Sell(ctx context.Context, position *Position) error {
 	return nil
 }
 
-func (s *shortPosition) Invalidate(ctx context.Context, position *Position) error {
+func (s *shortPosition) Invalidate(ctx context.Context, position *infrastructure.Position) error {
 	_, err := s.adaptor.NewOrder(ctx, position.ToPlacePositionModel())
 	if err != nil {
 		return err
 	}
 
-	err = s.botOnRunTable.Delete(ctx, position.ToBnFtBotOnRunTable())
+	err = s.botOnRunTable.Delete(ctx, position)
 	if err != nil {
 		return err
 	}
 
-	err = s.historyTable.Insert(ctx, position.ToBnFtHistoryTable())
+	err = s.historyTable.Insert(ctx, position)
 	if err != nil {
 		return err
 	}

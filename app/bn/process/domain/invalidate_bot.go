@@ -1,6 +1,8 @@
 package domain
 
-import "tradethingbot/app/bn/infrastructure/position"
+import (
+	"tradethingbot/app/bn/infrastructure"
+)
 
 type InvalidateBot struct {
 	BotId      string `json:"botId"`
@@ -10,8 +12,8 @@ type InvalidateBot struct {
 	// PositionSide string `json:"position_side"`
 }
 
-func (b *InvalidateBot) ToPosition() *position.Position {
-	return &position.Position{
+func (b *InvalidateBot) ToPosition() *infrastructure.Position {
+	return &infrastructure.Position{
 		BotID:     b.BotId,
 		ClientId:  b.BotOrderId,
 		AccountId: b.AccountId,

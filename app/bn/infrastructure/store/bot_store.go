@@ -3,7 +3,6 @@ package infrastructure
 import (
 	"context"
 	"tradethingbot/app/bn/infrastructure"
-	"tradethingbot/app/bn/infrastructure/position"
 
 	bndynamodb "github.com/non26/tradepkg/pkg/bn/dynamodb_future"
 )
@@ -20,12 +19,12 @@ func NewBotStore(
 	}
 }
 
-func (s *botStore) Get(ctx context.Context, botId string) (*position.Position, error) {
+func (s *botStore) Get(ctx context.Context, botId string) (*infrastructure.Position, error) {
 	bot, err := s.botTable.Get(ctx, botId)
 	if err != nil {
 		return nil, err
 	}
-	res := &position.Position{
+	res := &infrastructure.Position{
 		BotID: bot.BotID,
 	}
 	res.IsFoundBotID = bot.IsFound()

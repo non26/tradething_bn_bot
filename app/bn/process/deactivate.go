@@ -19,23 +19,29 @@ func (b *botService) DeactivateBot(ctx context.Context, req *domain.Activation) 
 		return response
 	}
 	if !lookUpResult.IsCurrentBotActive() {
-		response.SetFailed("bot is not active")
+		response.SetFailed("bot is already not active")
 		return response
 	}
-	bot, err := b.storeBotOnRun.Get(ctx, req.ToPosition())
+
+	if !lookUpResult.IsRegistor() {
+		response.SetFailed("bot registor not found")
+		return response
+	}
+
+	bot, err := b.storeBotRegistor.Get(ctx, req.ToPosition())
 	if err != nil {
 		response.SetFailed(err.Error())
 		return response
 	}
 
-	closePosition := domain.BotTimeframeExeIntervalRequest{}
-	closePosition.SetAccountId(bot.AccountId)
-	closePosition.SetBotId(bot.BotID)
-	closePosition.SetBotOrderID(bot.ClientId)
-	closePosition.SetSymbol(bot.Symbol)
-	closePosition.SetPositionSide(bot.PositionSide)
-	closePosition.SetAmountB(bot.AmountB)
-	err = b.trade.PlacePosition(ctx, closePosition.ToClosePosition())
+	currentPosition := domain.BotTimeframeExeIntervalRequest{}
+	currentPosition.SetAccountId(bot.AccountId)
+	currentPosition.SetBotId(bot.BotID)
+	currentPosition.SetBotOrderID(bot.ClientId)
+	currentPosition.SetSymbol(bot.Symbol)
+	currentPosition.SetPositionSide(bot.PositionSide)
+	currentPosition.SetAmountB(bot.AmountB)
+	err = b.trade.PlacePosition(ctx, currentPosition.ToClosePosition())
 	if err != nil {
 		response.SetFailed(err.Error())
 		return response
@@ -51,11 +57,18 @@ func (b *botService) DeactivateBot(ctx context.Context, req *domain.Activation) 
 		AccountId:    bot.AccountId,
 	}
 
-	err = b.storeBotOnRun.Upsert(ctx, deactivatePosition)
+	err = b.storeBotRegistor.Upsert(ctx, deactivatePosition)
 	if err != nil {
 		response.SetFailed(err.Error())
 		return response
 	}
 
+	err = b.storeBotOnRun.Delete(ctx, req.ToPosition())
+	if err != nil {
+		response.SetFailed(err.Error())
+		return response
+	}
+
+	response.SetSuccess()
 	return response
 }

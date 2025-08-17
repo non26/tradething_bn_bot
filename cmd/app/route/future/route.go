@@ -54,12 +54,14 @@ func FutureRoute(
 	longPosition := position.NewLongPosition(
 		historyStore,
 		botOnRunStore,
+		botRegistorStore,
 		adaptorTradeOrder,
 	)
 
 	shortPosition := position.NewShortPosition(
 		historyStore,
 		botOnRunStore,
+		botRegistorStore,
 		adaptorTradeOrder,
 	)
 

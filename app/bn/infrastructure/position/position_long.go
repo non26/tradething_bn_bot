@@ -7,20 +7,23 @@ import (
 )
 
 type longPosition struct {
-	historyTable  infrastructure.IBnFutureHistoryStore
-	botOnRunTable infrastructure.IBotOnRunStore
-	adaptor       adaptor.IOrderAdaptor
+	historyStore     infrastructure.IBnFutureHistoryStore
+	botOnRunStore    infrastructure.IBotOnRunStore
+	botRegistorStore infrastructure.IBotRegistorStore
+	adaptor          adaptor.IOrderAdaptor
 }
 
 func NewLongPosition(
-	historyTable infrastructure.IBnFutureHistoryStore,
-	botOnRunTable infrastructure.IBotOnRunStore,
+	historyStore infrastructure.IBnFutureHistoryStore,
+	botOnRunStore infrastructure.IBotOnRunStore,
+	botRegistorStore infrastructure.IBotRegistorStore,
 	adaptor adaptor.IOrderAdaptor,
 ) infrastructure.IPosition {
 	return &longPosition{
-		historyTable:  historyTable,
-		botOnRunTable: botOnRunTable,
-		adaptor:       adaptor,
+		historyStore:     historyStore,
+		botOnRunStore:    botOnRunStore,
+		botRegistorStore: botRegistorStore,
+		adaptor:          adaptor,
 	}
 }
 
@@ -31,7 +34,7 @@ func (l *longPosition) Buy(ctx context.Context, position *infrastructure.Positio
 		return err
 	}
 
-	err = l.botOnRunTable.Upsert(ctx, position)
+	err = l.botOnRunStore.Upsert(ctx, position)
 	if err != nil {
 		return err
 	}
@@ -56,12 +59,17 @@ func (l *longPosition) Invalidate(ctx context.Context, position *infrastructure.
 		return err
 	}
 
-	err = l.botOnRunTable.Delete(ctx, position)
+	err = l.botOnRunStore.Delete(ctx, position)
 	if err != nil {
 		return err
 	}
 
-	err = l.historyTable.Insert(ctx, position)
+	err = l.botRegistorStore.Delete(ctx, position)
+	if err != nil {
+		return err
+	}
+
+	err = l.historyStore.Insert(ctx, position)
 	if err != nil {
 		return err
 	}

@@ -30,6 +30,7 @@ type IBotRegistorStore interface {
 	Upsert(ctx context.Context, position *Position) error
 	Get(ctx context.Context, position *Position) (*Position, error)
 	GetAll(ctx context.Context) ([]*Position, error)
+	Delete(ctx context.Context, position *Position) error
 }
 
 type IBnFutureHistoryStore interface {

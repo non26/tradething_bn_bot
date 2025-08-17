@@ -60,3 +60,7 @@ func (s *botRegistorStore) GetAll(ctx context.Context) ([]*infrastructure.Positi
 	}
 	return positions, nil
 }
+
+func (s *botRegistorStore) Delete(ctx context.Context, _position *infrastructure.Position) error {
+	return s.botRegistorTable.Delete(ctx, _position.BotID, _position.ClientId)
+}

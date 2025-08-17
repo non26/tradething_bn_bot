@@ -39,6 +39,7 @@ func (p *Position) ToBnFtBotOnRunTable() *dynamodbmodel.BnFtBotOnRun {
 	fields := &dynamodbmodel.BnFtBotOnRun{
 		BotID:      p.BotID,
 		BotOrderID: p.ClientId,
+		AccountId:  p.AccountId,
 	}
 	return fields
 
@@ -61,6 +62,7 @@ func (p *Position) ToBnFtBotRegistorTable() *dynamodbmodel.BnFtBotRegistor {
 		Symbol:       p.Symbol,
 		AccountId:    p.AccountId,
 		Setting:      string(p.Setting),
+		IsActive:     p.IsActive,
 	}
 }
 

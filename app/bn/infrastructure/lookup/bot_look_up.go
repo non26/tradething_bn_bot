@@ -64,8 +64,8 @@ func (b *botLookUp) LookUp(ctx context.Context, position *infrastructure.Positio
 
 	if botOnRun.IsFoundBotOnRunning {
 		return domainservice.NewLookUpResult(
-			botOnRun.BotID,
-			botOnRun.ClientId,
+			botRegistor.BotID,
+			botRegistor.ClientId,
 			botRegistor.PositionSide,
 			botRegistor.AmountB,
 			botRegistor.Symbol,
@@ -77,8 +77,8 @@ func (b *botLookUp) LookUp(ctx context.Context, position *infrastructure.Positio
 	}
 
 	return domainservice.NewLookUpResultFirstTime(
-		botOnRun.BotID,
-		botOnRun.ClientId,
+		botRegistor.BotID,
+		botRegistor.ClientId,
 		botRegistor.PositionSide,
 		botRegistor.AmountB,
 		botRegistor.Symbol,

@@ -36,6 +36,7 @@ func (s *botRegistorStore) Get(ctx context.Context, _position *infrastructure.Po
 		Symbol:       botRegistor.Symbol,
 		AccountId:    botRegistor.AccountId,
 		Setting:      []byte(botRegistor.Setting),
+		IsActive:     botRegistor.IsActive,
 	}
 	res.IsFoundBotRegistor = botRegistor.IsFound()
 	return res, nil

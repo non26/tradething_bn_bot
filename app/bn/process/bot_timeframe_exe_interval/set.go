@@ -28,6 +28,7 @@ func (b *botTimeframeExeInterval) Set(ctx context.Context, req *domain.BotTimefr
 		PositionSide: req.GetPositionSide(),
 		AmountB:      req.GetAmountB(),
 		IsActive:     false,
+		AccountId:    req.GetAccountId(),
 	}
 
 	return &res, nil

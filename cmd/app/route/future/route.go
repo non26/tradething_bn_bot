@@ -112,4 +112,9 @@ func FutureRoute(
 		process,
 	)
 	app.POST("/deactivate-bot", deactivateHandler.HandleDeactivate)
+
+	tvActivationHandler := handler.NewTVActivationHandler(
+		process,
+	)
+	app.POST("/tv-activation", tvActivationHandler.HandleTVActivation)
 }
